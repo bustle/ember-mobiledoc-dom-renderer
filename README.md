@@ -32,6 +32,18 @@ The ember components with names matching the mobiledoc card names will be render
 and passed a `payload` property.
 The ember components will be in a wrapper div with the class '__rendered-mobiledoc-card' and '__rendered-mobiledoc-card-${cardName}'.
 
+#### Render mobiledoc with plain javascript cards
+
+If your mobiledoc uses cards that are not implemented as ember components, you can pass the
+`cards` property directly. It will be concatenated with any passed `cardNames`.
+
+```
+{{! myCardNames are ember component names, e.g.: ['embed-card']}}
+{{! cards is an array of plain javascript card objects, e.g. [{name, type, render}, {name, type, render}, ...]}}
+{{render-mobiledoc mobiledoc=myMobileDoc cards=cards cardNames=myCardNames}}
+
+{{! Mobiledoc will be rendered using the concatenation of the passed `cards` and ember components for `cardNames`}}
+
 #### Customizing card lookup
 
 If your mobiledoc card names do not match component names, you can subclass

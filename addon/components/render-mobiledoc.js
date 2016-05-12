@@ -75,6 +75,12 @@ export default Ember.Component.extend({
     assert(`Must pass mobiledoc to render-mobiledoc component`, !!mobiledoc);
   },
 
+  unknownCardHandler: null,
+  unknownAtomHandler: null,
+
+  cards: [],
+  atoms: [],
+
   // pass in an array of card names that the mobiledoc may have. These
   // map to component names using `cardNameToComponentName`
   cardNames: [],
@@ -82,6 +88,18 @@ export default Ember.Component.extend({
   // pass in an array of atom names that the mobiledoc may have. These
   // map to component names using `atomNameToComponentName`
   atomNames: [],
+
+  cardOptions: {},
+
+  _allCards: computed('cards', '_mdcCards', function() {
+    let { cards, _mdcCards } = this.getProperties('cards', '_mdcCards');
+    return [].concat(cards, _mdcCards);
+  }),
+
+  _allAtoms: computed('atoms', '_mdcAtoms', function() {
+    let { atoms, _mdcAtoms } = this.getProperties('atoms', '_mdcAtoms');
+    return [].concat(atoms, _mdcAtoms);
+  }),
 
   _mdcCards: computed('cardNames', function() {
     return this.get('cardNames').map(name => createComponentCard(name));
@@ -96,12 +114,14 @@ export default Ember.Component.extend({
     let dom = emberRenderer && emberRenderer._dom;
     assert('Unable to get renderer dom helper', !!dom);
 
-    let cards = this.get('_mdcCards');
-    let atoms = this.get('_mdcAtoms');
+    let cards = this.get('_allCards');
+    let atoms = this.get('_allAtoms');
     let mobiledoc = this.get('mobiledoc');
     let cardOptions = this.get('_cardOptions');
+    let unknownCardHandler = this.get('unknownCardHandler');
+    let unknownAtomHandler = this.get('unknownAtomHandler');
 
-    let renderer = new Renderer({atoms, cards, cardOptions, dom});
+    let renderer = new Renderer({atoms, cards, cardOptions, dom, unknownAtomHandler, unknownCardHandler});
     let { result, teardown } = renderer.render(mobiledoc);
 
     this.set('renderedMobiledoc', result);
@@ -110,7 +130,11 @@ export default Ember.Component.extend({
     this._super(...arguments);
   },
 
-  _cardOptions: computed(function() {
+  _cardOptions: computed('cardOptions', function() {
+    return Ember.merge({}, this.get('cardOptions'), this.get('_componentCardOptions'));
+  }),
+
+  _componentCardOptions: computed(function() {
     return {
       [ADD_CARD_HOOK]: ({env, options, payload}) => {
         let { name: cardName, dom } = env;
