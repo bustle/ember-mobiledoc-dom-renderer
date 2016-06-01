@@ -131,7 +131,9 @@ export default Ember.Component.extend({
   },
 
   _cardOptions: computed('cardOptions', function() {
-    return Ember.merge({}, this.get('cardOptions'), this.get('_componentCardOptions'));
+    let options = Ember.merge({}, this.get('cardOptions'));
+    options = Ember.merge(options, this.get('_componentCardOptions'));
+    return options;
   }),
 
   _componentCardOptions: computed(function() {
