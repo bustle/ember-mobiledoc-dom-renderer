@@ -92,6 +92,20 @@ export default Ember.Component.extend({
   }),
 
   willRender() {
+    /*
+     We need to figure why this this is getting called after rendering
+     the same payload somewhere else. Since the editor is destroyed
+     and rendered again, wormhole goes into a weird state because it
+     doesn't find the destination elements. Related with
+     https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/issues/19
+
+     Also there is a a double render.
+     */
+    this.beginPropertyChanges();
+    this.get('_componentCards').clear();
+    this.get('_componentAtoms').clear();
+    this.endPropertyChanges();
+
     let emberRenderer = this.get('renderer');
     let dom = emberRenderer && emberRenderer._dom;
     assert('Unable to get renderer dom helper', !!dom);
@@ -147,6 +161,12 @@ export default Ember.Component.extend({
   }),
 
   willDestroyElement() {
+    // clean up cards and atoms so wormhole doesn't try to render
+    // them after mobiledoc has been destroy
+    this.beginPropertyChanges();
+    this.get('_componentCards').clear();
+    this.get('_componentAtoms').clear();
+    this.endPropertyChanges();
     if (this._teardownRender) {
       this._teardownRender();
     }
