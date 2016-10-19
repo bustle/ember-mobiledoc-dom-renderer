@@ -10,7 +10,8 @@
     "build": "ember build",
     "start": "ember server",
     "test": "ember try:testall",
-    "update-changelog": "conventional-changelog -i CHANGELOG.md -r 0 -s"
+    "update-changelog": "conventional-changelog -i CHANGELOG.md -r 0 -s",
+    "version": "npm run update-changlog && git add CHANGELOG.md"
   },
   "repository": "https://github.com/bustlelabs/ember-mobiledoc-dom-renderer",
   "engines": {

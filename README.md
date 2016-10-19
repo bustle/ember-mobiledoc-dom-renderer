@@ -62,9 +62,6 @@ to use the renderer directly in code, it can be imported:
 
 To release a new version:
 
-  * update version in `package.json`
-  * run `npm run update-changelog`
-  * `git commit -am "v<version>"`
-  * `git tag v<version>`
-  * push code and tag to github
-  * `npm publish`
+  * Use `np` (`npm install -g np`)
+  * `np <version>` (e.g. `np 1.0.0`)
+  * `git push <origin> --tags`
