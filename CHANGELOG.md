@@ -1,7 +1,26 @@
+<a name="0.5.3"></a>
+## 0.5.3 (2016-10-19)
+
+* 0.5.3 ([c3f6911](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/c3f6911))
+* Update Release process in README ([97882b0](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/97882b0))
+
+
+
+<a name="0.5.3-beta.1"></a>
+## 0.5.3-beta.1 (2016-10-13)
+
+* ensure cards and atoms are properly destroyed in teardown ([dab9d94](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/dab9d94)), closes [#23](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/issues/23)
+* Run tests on ember beta, release, canary ([4d1ea6c](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/4d1ea6c)), closes [#18](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/issues/18)
+* Use readonly data for component cards/atoms, avoid unnecessary rerenders ([692291f](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/692291f)), closes [#19](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/issues/19)
+* v0.5.3-beta.1 ([98cf929](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/98cf929))
+
+
+
 <a name="0.5.2"></a>
 ## 0.5.2 (2016-06-09)
 
 * Update ember-wormhole to ^0.4.0 ([a420601](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/a420601))
+* v0.5.2 ([3aebfac](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/3aebfac))
 
 
 
