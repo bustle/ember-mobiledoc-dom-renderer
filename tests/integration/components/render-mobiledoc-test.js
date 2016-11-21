@@ -2,7 +2,12 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { CARD_ELEMENT_CLASS, ATOM_ELEMENT_CLASS } from 'ember-mobiledoc-dom-renderer/components/render-mobiledoc';
 import Ember from 'ember';
-import { createSimpleMobiledoc, createMobiledocWithCard, createMobiledocWithAtom } from '../../helpers/mobiledoc';
+import {
+  createSimpleMobiledoc,
+  createMobiledocWithStrongMarkup,
+  createMobiledocWithCard,
+  createMobiledocWithAtom
+} from '../../helpers/mobiledoc';
 
 moduleForComponent('render-mobiledoc', 'Integration | Component | render-mobiledoc', {
   integration: true
@@ -305,4 +310,46 @@ test('changing mobiledoc calls teardown and destroys card components', function(
 
   assert.deepEqual(didInsert, ['other-card'], 'inserted other card');
   assert.deepEqual(didDestroy, ['test-card'], 'destroyed test-card');
+});
+
+test('Can pass unknownCardHandler', function(assert) {
+  let called = 0;
+  this.set('unknownCardHandler', () => { called++; });
+  this.set('mobiledoc', createMobiledocWithCard('unknown'));
+
+  this.render(hbs`{{render-mobiledoc mobiledoc=mobiledoc unknownCardHandler=unknownCardHandler}}`);
+
+  assert.equal(called, 1, 'unknownCardHandler called');
+});
+
+test('Can pass unknownAtomHandler', function(assert) {
+  let called = 0;
+  this.set('unknownAtomHandler', () => { called++; });
+  this.set('mobiledoc', createMobiledocWithAtom('unknown'));
+
+  this.render(hbs`{{render-mobiledoc mobiledoc=mobiledoc unknownAtomHandler=unknownAtomHandler}}`);
+
+  assert.equal(called, 1, 'unknownAtomHandler called');
+});
+
+test('Can pass sectionElementRenderer', function(assert) {
+  this.set('sectionElementRenderer', {
+    p(_, doc) { return doc.createElement('h1'); }
+  });
+  this.set('mobiledoc', createSimpleMobiledoc('Hi'));
+
+  this.render(hbs`{{render-mobiledoc mobiledoc=mobiledoc sectionElementRenderer=sectionElementRenderer}}`);
+
+  assert.ok(this.$('h1:contains(Hi)').length, 'renders mobiledoc');
+});
+
+test('Can pass markupElementRenderer', function(assert) {
+  this.set('markupElementRenderer', {
+    strong(_, doc) { return doc.createElement('span'); }
+  });
+  this.set('mobiledoc', createMobiledocWithStrongMarkup('Hi'));
+
+  this.render(hbs`{{render-mobiledoc mobiledoc=mobiledoc markupElementRenderer=markupElementRenderer}}`);
+
+  assert.ok(this.$('span:contains(Hi)').length, 'renders mobiledoc');
 });

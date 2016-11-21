@@ -1,4 +1,4 @@
-const MOBILEDOC_VERSION = '0.3.0';
+const MOBILEDOC_VERSION = '0.3.1';
 
 export function createSimpleMobiledoc(text) {
   return {
@@ -9,6 +9,22 @@ export function createSimpleMobiledoc(text) {
     sections: [
       [1, 'P', [
         [0, [], 0, text]
+      ]]
+    ]
+  };
+}
+
+export function createMobiledocWithStrongMarkup(text) {
+  return {
+    version: MOBILEDOC_VERSION,
+    markups: [
+      ['STRONG']
+    ],
+    atoms: [],
+    cards: [],
+    sections: [
+      [1, 'P', [
+        [0, [0], 1, text]
       ]]
     ]
   };
