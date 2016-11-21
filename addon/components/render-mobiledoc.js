@@ -102,12 +102,24 @@ export default Ember.Component.extend({
     let domHelper = getDOM(this);
     let dom = domHelper.document;
 
-    let cards = this.get('_mdcCards');
-    let atoms = this.get('_mdcAtoms');
     let mobiledoc = this.get('mobiledoc');
-    let cardOptions = this.get('_cardOptions');
 
-    let renderer = new Renderer({atoms, cards, cardOptions, dom});
+    let options = {
+      cards: this.get('_mdcCards'),
+      atoms: this.get('_mdcAtoms'),
+      cardOptions: this.get('_cardOptions')
+    };
+    [
+      'mobiledoc', 'sectionElementRenderer', 'markupElementRenderer',
+       'unknownCardHandler', 'unknownAtomHandler'
+    ].forEach(option => {
+      let value = this.get(option);
+      if (value) {
+        options[option] = value;
+      }
+    });
+
+    let renderer = new Renderer(options);
     let { result, teardown } = renderer.render(mobiledoc);
 
     // result is a document fragment, and glimmer2 errors when cleaning it up.
