@@ -105,6 +105,7 @@ export default Ember.Component.extend({
     let mobiledoc = this.get('mobiledoc');
 
     let options = {
+      dom,
       cards: this.get('_mdcCards'),
       atoms: this.get('_mdcAtoms'),
       cardOptions: this.get('_cardOptions')
