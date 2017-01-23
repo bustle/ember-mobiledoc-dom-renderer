@@ -1,6 +1,6 @@
 {
   "name": "ember-mobiledoc-dom-renderer",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "provides a runtime mobiledoc dom-renderer to ember apps",
   "directories": {
     "doc": "doc",
