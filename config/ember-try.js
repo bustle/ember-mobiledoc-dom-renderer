@@ -7,6 +7,18 @@ module.exports = {
       }
     },
     {
+      name: '2.5',
+      dependencies: {
+        "ember": "^2.5"
+      }
+    },
+    {
+      name: '2.9',
+      dependencies: {
+        "ember": "^2.9"
+      }
+    },
+    {
       name: 'default',
       dependencies: { }
     },

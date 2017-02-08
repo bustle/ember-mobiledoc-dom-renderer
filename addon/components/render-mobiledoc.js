@@ -2,7 +2,7 @@ import Ember from 'ember';
 import Renderer from 'ember-mobiledoc-dom-renderer';
 import { RENDER_TYPE } from 'ember-mobiledoc-dom-renderer';
 import layout from '../templates/components/render-mobiledoc';
-import { getDOM } from '../utils/dom';
+import { getDocument } from '../utils/document';
 
 const {
   assert,
@@ -99,8 +99,7 @@ export default Ember.Component.extend({
   }),
 
   _renderMobiledoc() {
-    let domHelper = getDOM(this);
-    let dom = domHelper.document;
+    let dom = getDocument(this);
 
     let mobiledoc = this.get('mobiledoc');
 
