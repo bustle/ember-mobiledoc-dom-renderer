@@ -49,6 +49,18 @@ export default RenderMobiledoc.extend({
 });
 ```
 
+#### Render mobiledoc with atoms, using ember components to render atoms
+
+This works the same way as rendering mobiledoc with ember components for cards.
+To pass atom names to the renderer, use the `atomNames` property, e.g.:
+```hbs
+{{! myAtomNames is an array of atom names, e.g. ['mention-atom'] }}
+{{render-mobiledoc mobiledoc=myMobileDoc atomNames=myAtomNames}}
+```
+
+To customize atom lookup, extend the `render-mobiledoc` component and override
+its `atomNameToComponentName` method.
+
 #### Use mobiledoc-dom-renderer directly
 
 This addon provides the mobiledoc-dom-renderer directly. Most of the time
