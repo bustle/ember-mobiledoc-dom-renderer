@@ -3,6 +3,7 @@ import Renderer from 'ember-mobiledoc-dom-renderer';
 import { RENDER_TYPE } from 'ember-mobiledoc-dom-renderer';
 import layout from '../templates/components/render-mobiledoc';
 import { getDocument } from '../utils/document';
+import assign from '../utils/polyfilled-assign';
 
 const {
   assert,
@@ -106,8 +107,7 @@ export default Ember.Component.extend({
     let options = {
       dom,
       cards: this.get('_mdcCards'),
-      atoms: this.get('_mdcAtoms'),
-      cardOptions: this.get('_cardOptions')
+      atoms: this.get('_mdcAtoms')
     };
     [
       'mobiledoc', 'sectionElementRenderer', 'markupElementRenderer',
@@ -118,6 +118,10 @@ export default Ember.Component.extend({
         options[option] = value;
       }
     });
+
+    let passedOptions = this.get('cardOptions');
+    let cardOptions = this.get('_cardOptions');
+    options.cardOptions = passedOptions ? assign(passedOptions, cardOptions) : cardOptions;
 
     let renderer = new Renderer(options);
     let { result, teardown } = renderer.render(mobiledoc);
@@ -144,7 +148,8 @@ export default Ember.Component.extend({
         let card = {
           componentName,
           destinationElementId: element.getAttribute('id'),
-          payload
+          payload,
+          options
         };
         this.addCard(card);
         return { entity: card, element };
@@ -159,7 +164,8 @@ export default Ember.Component.extend({
           componentName,
           destinationElementId: element.getAttribute('id'),
           payload,
-          value
+          value,
+          options
         };
         this.addAtom(atom);
         return { entity: atom, element };
