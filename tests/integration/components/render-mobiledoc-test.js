@@ -174,13 +174,7 @@ test('changing mobiledoc calls teardown and destroys atom component', function(a
   this.set('mobiledoc', createMobiledocWithAtom('test-atom'));
   this.set('atomNames', ['test-atom', 'other-atom']);
 
-  let MyRenderComponent = this.container.lookupFactory('component:render-mobiledoc');
   let didDestroy = [], didInsert = [];
-  this.registry.register('component:my-render-mobiledoc', MyRenderComponent.extend({
-    willDestroy() {
-      didDestroy.push('my-render-mobiledoc');
-    }
-  }));
 
   this.registry.register('component:test-atom', Ember.Component.extend({
     didInsertElement() { didInsert.push('test-atom'); },
@@ -191,7 +185,7 @@ test('changing mobiledoc calls teardown and destroys atom component', function(a
     willDestroy() { didDestroy.push('other-atom'); }
   }));
 
-  this.render(hbs`{{my-render-mobiledoc mobiledoc=mobiledoc atomNames=atomNames}}`);
+  this.render(hbs`{{render-mobiledoc mobiledoc=mobiledoc atomNames=atomNames}}`);
 
   assert.deepEqual(didDestroy, [], 'nothing destroyed');
   assert.deepEqual(didInsert, ['test-atom'], 'test-atom inserted');
@@ -352,4 +346,40 @@ test('Can pass markupElementRenderer', function(assert) {
   this.render(hbs`{{render-mobiledoc mobiledoc=mobiledoc markupElementRenderer=markupElementRenderer}}`);
 
   assert.ok(this.$('span:contains(Hi)').length, 'renders mobiledoc');
+});
+
+test('Can pass cardOptions and they appear for cards', function(assert) {
+  assert.expect(1);
+  let passedOption = {};
+  let cardName = 'my-card';
+  this.set('mobiledoc', createMobiledocWithCard(cardName));
+  this.set('cardNames', [cardName]);
+  this.set('cardOptions', {passedOption});
+  let CardComponent = Ember.Component.extend({
+    init() {
+      this._super(...arguments);
+      assert.equal(this.options.passedOption, passedOption);
+    }
+  });
+  this.registry.register('component:my-card', CardComponent);
+
+  this.render(hbs`{{render-mobiledoc mobiledoc=mobiledoc cardNames=cardNames cardOptions=cardOptions}}`);
+});
+
+test('Can pass cardOptions and they appear for atoms', function(assert) {
+  assert.expect(1);
+  let passedOption = {};
+  let atomName = 'my-atom';
+  this.set('mobiledoc', createMobiledocWithAtom(atomName));
+  this.set('atomNames', [atomName]);
+  this.set('cardOptions', {passedOption});
+  let AtomComponent = Ember.Component.extend({
+    init() {
+      this._super(...arguments);
+      assert.equal(this.options.passedOption, passedOption);
+    }
+  });
+  this.registry.register('component:my-atom', AtomComponent);
+
+  this.render(hbs`{{render-mobiledoc mobiledoc=mobiledoc atomNames=atomNames cardOptions=cardOptions}}`);
 });
