@@ -9,7 +9,7 @@ module.exports = {
   name: 'ember-mobiledoc-dom-renderer',
 
   treeForAddon: function(tree) {
-    var libRoot = require.resolve('mobiledoc-dom-renderer/dist/modules/es2017');
+    var libRoot = require.resolve('mobiledoc-dom-renderer/lib');
     var libPath = path.dirname(libRoot);
 
     var rendererTree = new Funnel(libPath, {
