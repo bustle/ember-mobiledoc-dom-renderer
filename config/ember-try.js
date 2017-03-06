@@ -93,6 +93,13 @@ module.exports = {
           'ember-source': null
         }
       }
+    },
+    {
+      name: 'fastboot-addon-tests',
+      command: 'ember fastboot:test',
+      bower: {
+        dependencies: {}
+      }
     }
   ]
 };

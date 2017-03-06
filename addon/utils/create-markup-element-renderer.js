@@ -39,12 +39,9 @@ function createHrefSanitizer(component) {
 }
 
 export default function createMarkupElementRenderer(component) {
-  console.log('creating markup element renderer!!!!!!!!!!');
   if (!needsMarkupElementRenderer) {
-    console.log('returning nothing!');
     return {};
   } else {
-    console.log('creating sanitizer!!!');
     let sanitizeHref = createHrefSanitizer(component);
 
     return {
