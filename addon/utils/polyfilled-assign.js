@@ -5,4 +5,3 @@ const { merge, assign } = Ember;
 let polyfilledAssign = assign || merge;
 
 export default polyfilledAssign;
-
