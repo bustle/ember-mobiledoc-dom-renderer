@@ -14,12 +14,10 @@ export function createSimpleMobiledoc(text) {
   };
 }
 
-export function createMobiledocWithStrongMarkup(text) {
+export function createMobiledocWithMarkup({markup, text}) {
   return {
     version: MOBILEDOC_VERSION,
-    markups: [
-      ['STRONG']
-    ],
+    markups: [ markup ],
     atoms: [],
     cards: [],
     sections: [
