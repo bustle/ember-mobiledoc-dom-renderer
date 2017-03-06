@@ -4,7 +4,7 @@ import { CARD_ELEMENT_CLASS, ATOM_ELEMENT_CLASS } from 'ember-mobiledoc-dom-rend
 import Ember from 'ember';
 import {
   createSimpleMobiledoc,
-  createMobiledocWithStrongMarkup,
+  createMobiledocWithMarkup,
   createMobiledocWithCard,
   createMobiledocWithAtom
 } from '../../helpers/mobiledoc';
@@ -341,7 +341,7 @@ test('Can pass markupElementRenderer', function(assert) {
   this.set('markupElementRenderer', {
     strong(_, doc) { return doc.createElement('span'); }
   });
-  this.set('mobiledoc', createMobiledocWithStrongMarkup('Hi'));
+  this.set('mobiledoc', createMobiledocWithMarkup({text: 'Hi', markup: ['strong']}));
 
   this.render(hbs`{{render-mobiledoc mobiledoc=mobiledoc markupElementRenderer=markupElementRenderer}}`);
 
@@ -382,4 +382,14 @@ test('Can pass cardOptions and they appear for atoms', function(assert) {
   this.registry.register('component:my-atom', AtomComponent);
 
   this.render(hbs`{{render-mobiledoc mobiledoc=mobiledoc atomNames=atomNames cardOptions=cardOptions}}`);
+});
+
+test('A HREF values are sanitized', function(assert) {
+  let badHref = 'javascript:evil'; // jshint ignore:line
+  this.set('mobiledoc', createMobiledocWithMarkup({text: 'hi', markup: ['a', ['href', badHref]]}));
+  this.render(hbs`{{render-mobiledoc mobiledoc=mobiledoc}}`);
+
+  let a = this.$('a');
+  assert.ok(a.length, 'has a');
+  assert.equal(a.attr('href'), 'unsafe:javascript:evil');
 });
