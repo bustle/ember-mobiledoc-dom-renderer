@@ -28,10 +28,11 @@
     "ember-cli-htmlbars": "^1.1.1",
     "ember-getowner-polyfill": "^1.2.2",
     "ember-wormhole": "^0.5.1",
-    "mobiledoc-dom-renderer": "^0.6.3"
+    "mobiledoc-dom-renderer": "^0.6.4-1"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
+    "chai": "^3.5.0",
     "conventional-changelog": "^1.1.0",
     "conventional-changelog-cli": "^1.1.1",
     "ember-cli": "2.11.1",
@@ -49,9 +50,10 @@
     "ember-disable-prototype-extensions": "^1.1.0",
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-export-application-global": "^1.0.5",
+    "ember-fastboot-addon-tests": "0.2.2",
     "ember-load-initializers": "^0.6.0",
-    "ember-source": "~2.11.0",
     "ember-resolver": "^2.0.3",
+    "ember-source": "~2.11.0",
     "loader.js": "^4.0.10"
   },
   "engines": {
