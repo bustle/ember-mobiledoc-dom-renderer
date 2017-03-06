@@ -1,5 +1,10 @@
+/*jshint node:true*/
 module.exports = {
   scenarios: [
+    {
+      name: 'default',
+      dependencies: { }
+    },
     {
       name: '1.13',
       dependencies: {
@@ -7,20 +12,26 @@ module.exports = {
       }
     },
     {
-      name: '2.5',
-      dependencies: {
-        "ember": "^2.5"
+      name: 'ember-lts-2.4',
+      bower: {
+        dependencies: {
+          'ember': 'components/ember#lts-2-4'
+        },
+        resolutions: {
+          'ember': 'lts-2-4'
+        }
       }
     },
     {
-      name: '2.9',
-      dependencies: {
-        "ember": "^2.9"
+      name: 'ember-lts-2.8',
+      bower: {
+        dependencies: {
+          'ember': 'components/ember#lts-2-8'
+        },
+        resolutions: {
+          'ember': 'lts-2-8'
+        }
       }
-    },
-    {
-      name: 'default',
-      dependencies: { }
     },
     {
       name: 'ember-release',
