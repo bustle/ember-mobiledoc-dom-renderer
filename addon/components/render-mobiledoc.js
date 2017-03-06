@@ -4,6 +4,7 @@ import { RENDER_TYPE } from 'ember-mobiledoc-dom-renderer';
 import layout from '../templates/components/render-mobiledoc';
 import { getDocument } from '../utils/document';
 import assign from '../utils/polyfilled-assign';
+import createMarkupElementRenderer from '../utils/create-markup-element-renderer';
 
 const {
   assert,
@@ -122,6 +123,11 @@ export default Ember.Component.extend({
     let passedOptions = this.get('cardOptions');
     let cardOptions = this.get('_cardOptions');
     options.cardOptions = passedOptions ? assign(passedOptions, cardOptions) : cardOptions;
+
+    options.markupElementRenderer = assign(
+      createMarkupElementRenderer(this),
+      options.markupElementRenderer
+    );
 
     let renderer = new Renderer(options);
     let { result, teardown } = renderer.render(mobiledoc);
