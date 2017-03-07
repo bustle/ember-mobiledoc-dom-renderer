@@ -84,4 +84,52 @@ describe('index', function() {
       });
   });
 
+  it('renders mobiledoc with card', function() {
+    let name = 'card';
+    let componentClassName = 'test-card-component';
+    let payloadClassName   = 'test-card-component-payload';
+
+    return this.visit('/')
+      .then(function(res) {
+        let $ = res.jQuery;
+        let response = res.response;
+        expect(response.statusCode).to.equal(200);
+
+        let wrapper = $(`.render-mobiledoc-wrapper.${name}`);
+        expect(wrapper.length, 'rendered mobiledoc').to.equal(1);
+
+        let component = $(`.render-mobiledoc-wrapper.${name} .${componentClassName}`);
+        expect(component.length, 'rendered component').to.equal(1);
+
+        let payload = $(`.render-mobiledoc-wrapper.${name} .${payloadClassName}`);
+        expect(payload.text().trim(), 'payload').to.equal('bar');
+      });
+  });
+
+  it('renders mobiledoc with atom', function() {
+    let name = 'atom';
+    let componentClassName = 'test-atom-component';
+    let payloadClassName   = 'test-atom-component-payload';
+    let valueClassName     = 'test-atom-component-value';
+
+    return this.visit('/')
+      .then(function(res) {
+        let $ = res.jQuery;
+        let response = res.response;
+        expect(response.statusCode).to.equal(200);
+
+        let wrapper = $(`.render-mobiledoc-wrapper.${name}`);
+        expect(wrapper.length, 'rendered mobiledoc').to.equal(1);
+
+        let component = $(`.render-mobiledoc-wrapper.${name} .${componentClassName}`);
+        expect(component.length, 'rendered component').to.equal(1);
+
+        let payload = $(`.render-mobiledoc-wrapper.${name} .${payloadClassName}`);
+        expect(payload.text().trim(), 'payload').to.equal('bar');
+
+        let value = $(`.render-mobiledoc-wrapper.${name} .${valueClassName}`);
+        expect(value.text().trim(), 'value').to.equal('value');
+      });
+  });
+
 });
