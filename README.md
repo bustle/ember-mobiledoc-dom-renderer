@@ -58,6 +58,8 @@ To pass atom names to the renderer, use the `atomNames` property, e.g.:
 {{render-mobiledoc mobiledoc=myMobileDoc atomNames=myAtomNames}}
 ```
 
+The component will be passed a `payload` and `value` property.
+
 To customize atom lookup, extend the `render-mobiledoc` component and override
 its `atomNameToComponentName` method.
 
