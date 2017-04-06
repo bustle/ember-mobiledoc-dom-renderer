@@ -165,7 +165,8 @@ export default Ember.Component.extend({
           destinationElementId: element.getAttribute('id'),
           payload,
           value,
-          options
+          options,
+          env
         };
         this.addAtom(atom);
         return { entity: atom, element };
