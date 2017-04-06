@@ -7,6 +7,6 @@
 {{/each}}
 {{#each _componentAtoms as |atom|}}
   {{#ember-wormhole to=atom.destinationElementId}}
-    {{component atom.componentName options=(readonly atom.options) payload=(readonly atom.payload) value=(readonly atom.value)}}
+    {{component atom.componentName env=atom.env options=(readonly atom.options) payload=(readonly atom.payload) value=(readonly atom.value)}}
   {{/ember-wormhole}}
 {{/each}}
