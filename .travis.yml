@@ -1,14 +1,17 @@
 ---
 language: node_js
 node_js:
-  - "stable"
+  - "4"
 
 sudo: false
+dist: trusty
+
+addons:
+  chrome: stable
 
 cache:
   directories:
     - $HOME/.npm
-    - $HOME/.cache
 
 env:
   - EMBER_TRY_SCENARIO=1.13
@@ -24,17 +27,11 @@ matrix:
   fast_finish: true
   allow_failures:
     - env: EMBER_TRY_SCENARIO=ember-canary
-    - env: EMBER_TRY_SCENARIO=fastboot-addon-tests
 
 before_install:
   - npm config set spin false
-  - npm install -g bower phantomjs-prebuilt
-  - bower --version
-  - phantomjs --version
-
-install:
-  - npm install
-  - bower install
+  - npm install -g npm@4
+  - npm --version
 
 script:
-  - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO test --skip-cleanup
+  - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
