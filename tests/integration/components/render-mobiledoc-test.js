@@ -1,6 +1,8 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { CARD_ELEMENT_CLASS, ATOM_ELEMENT_CLASS } from 'ember-mobiledoc-dom-renderer/components/render-mobiledoc';
+import RenderMobiledocComponent, {
+  CARD_ELEMENT_CLASS, ATOM_ELEMENT_CLASS
+} from 'ember-mobiledoc-dom-renderer/components/render-mobiledoc';
 import Ember from 'ember';
 import {
   createSimpleMobiledoc,
@@ -42,8 +44,7 @@ test('it uses `cardNameToComponentName` to allow selecting components', function
   this.set('cardNames', [cardName]);
 
   let passedCardName;
-  let Component = this.container.lookupFactory('component:render-mobiledoc');
-  this.registry.register('component:my-render-mobiledoc', Component.extend({
+  this.registry.register('component:my-render-mobiledoc', RenderMobiledocComponent.extend({
     cardNameToComponentName(cardName) {
       passedCardName = cardName;
       return 'sample-changed-name-test-card';
@@ -81,8 +82,7 @@ test('it uses `atomNameToComponentName` to allow selecting components', function
   this.set('atomNames', [atomName]);
 
   let passedAtomName;
-  let Component = this.container.lookupFactory('component:render-mobiledoc');
-  this.registry.register('component:my-render-mobiledoc', Component.extend({
+  this.registry.register('component:my-render-mobiledoc', RenderMobiledocComponent.extend({
     atomNameToComponentName(atomName) {
       passedAtomName = atomName;
       return 'sample-changed-name-test-atom';
@@ -127,9 +127,8 @@ test('teardown destroys atom components', function(assert) {
   this.set('mobiledoc', createMobiledocWithAtom('test-atom'));
   this.set('atomNames', ['test-atom']);
 
-  let MyRenderComponent = this.container.lookupFactory('component:render-mobiledoc');
   let didDestroy = [], didInsert = [];
-  this.registry.register('component:my-render-mobiledoc', MyRenderComponent.extend({
+  this.registry.register('component:my-render-mobiledoc', RenderMobiledocComponent.extend({
     willDestroy() {
       didDestroy.push('my-render-mobiledoc');
     }
@@ -229,9 +228,8 @@ test('teardown destroys card components', function(assert) {
   this.set('mobiledoc', createMobiledocWithCard('test-card'));
   this.set('cardNames', ['test-card']);
 
-  let MyRenderComponent = this.container.lookupFactory('component:render-mobiledoc');
   let didDestroy = [], didInsert = [];
-  this.registry.register('component:my-render-mobiledoc', MyRenderComponent.extend({
+  this.registry.register('component:my-render-mobiledoc', RenderMobiledocComponent.extend({
     willDestroy() {
       didDestroy.push('my-render-mobiledoc');
     }
@@ -275,9 +273,8 @@ test('changing mobiledoc calls teardown and destroys card components', function(
   this.set('mobiledoc', createMobiledocWithCard('test-card'));
   this.set('cardNames', ['test-card', 'other-card']);
 
-  let MyRenderComponent = this.container.lookupFactory('component:render-mobiledoc');
   let didDestroy = [], didInsert = [];
-  this.registry.register('component:my-render-mobiledoc', MyRenderComponent.extend({
+  this.registry.register('component:my-render-mobiledoc', RenderMobiledocComponent.extend({
     willDestroy() {
       didDestroy.push('my-render-mobiledoc');
     }
