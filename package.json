@@ -19,7 +19,7 @@
     "start": "ember server",
     "test": "ember try:each",
     "update-changelog": "conventional-changelog -i CHANGELOG.md -r 0 -s",
-    "version": "npm run update-changlog && git add CHANGELOG.md"
+    "version": "npm run update-changelog && git add CHANGELOG.md"
   },
   "dependencies": {
     "broccoli-funnel": "^1.2.0",
