@@ -1,3 +1,85 @@
+<a name="0.6.0"></a>
+# 0.6.0 (2017-08-24)
+
+* Add ember-2.12 to ember-try config (#47) ([5729d6e](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/5729d6e))
+* Fix missing lookupFactory method by importing the Component class directly (#48) ([70425a5](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/70425a5)), closes [#48](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/issues/48)
+* fix typo in npm script ([b0ea325](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/b0ea325))
+* Update deps (fixes fastboot tests), test in Chrome at CI (#49) ([c8b07a1](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/c8b07a1)), closes [#49](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/issues/49)
+* chore(yarn): use yarn (#50) ([3ef669b](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/3ef669b))
+
+
+
+<a name="0.5.11"></a>
+## 0.5.11 (2017-03-07)
+
+* 0.5.11 ([efa4deb](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/efa4deb))
+* test(fastboot): Add fastboot tests for cards and atoms (#44) ([cc6b20c](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/cc6b20c))
+* chore(markupElementRenderer): Remove custom markupElementRenderer (#43) ([6a33c74](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/6a33c74))
+
+
+
+<a name="0.5.10"></a>
+## 0.5.10 (2017-03-06)
+
+* 0.5.10 ([82fb1a4](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/82fb1a4))
+* Upgrade to ember-cli 1.13.13 ([afc4c80](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/afc4c80))
+* upgrade to ember-cli 2.11.1 ([381b424](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/381b424))
+* upgrade to ember-cli 2.7.0 ([522ebb4](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/522ebb4))
+* fix(url sanitization): Pass an A markupElementRenderer when necessary (in Fastboot) (#42) ([29be168](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/29be168)), closes [#38](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/issues/38)
+
+
+
+<a name="0.5.9"></a>
+## 0.5.9 (2017-02-22)
+
+* 0.5.9 ([e788cd3](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/e788cd3))
+* Use latest mobiledoc-dom-renderer (^0.6.3) ([ddaa482](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/ddaa482))
+* use v0.6.2 of mobiledoc-dom-renderer ([97d6fc3](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/97d6fc3))
+
+
+
+<a name="0.5.8"></a>
+## 0.5.8 (2017-02-09)
+
+* 0.5.8 ([35a6cab](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/35a6cab))
+* Pass cardOptions to cards and atoms ([b25feeb](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/b25feeb))
+* doc: Mention atom rendering options ([f41c185](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/f41c185))
+
+
+
+<a name="0.5.7"></a>
+## 0.5.7 (2017-02-09)
+
+* 0.5.7 ([8a39f36](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/8a39f36))
+* Refactor getDOM to fix issue when running Ember in FastBoot with Glimmer ([57c8f8e](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/57c8f8e))
+
+
+
+<a name="0.5.6"></a>
+## 0.5.6 (2017-01-23)
+
+* 0.5.6 ([325e76f](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/325e76f))
+* Update ember-wormhole to ^0.5.1 for Glimmer 2 support ([bcc3369](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/bcc3369))
+
+
+
+<a name="0.5.5"></a>
+## 0.5.5 (2016-11-23)
+
+* 0.5.5 ([746400b](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/746400b))
+* Pass dom to the renderer ([6e0aa0b](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/6e0aa0b))
+
+
+
+<a name="0.5.4"></a>
+## 0.5.4 (2016-11-22)
+
+* 0.5.4 ([a41eb52](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/a41eb52))
+* Add support for more options ([2817859](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/2817859))
+* update changelog for v0.5.3 ([eabf610](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/eabf610))
+
+
+
 <a name="0.5.3"></a>
 ## 0.5.3 (2016-10-19)
 
