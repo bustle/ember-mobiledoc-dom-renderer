@@ -30,7 +30,10 @@ matrix:
 
 before_install:
   - npm config set spin false
+  - npm install -g npm@4
   - npm install -g yarn
+  - npm --version
+  - yarn --version
 
 script:
   - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
