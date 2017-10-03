@@ -63,6 +63,26 @@ The component will be passed a `payload` and `value` property.
 To customize atom lookup, extend the `render-mobiledoc` component and override
 its `atomNameToComponentName` method.
 
+#### Customizing markup and section rendering
+The `sectionElementRenderer` and `markupElementRenderer` options can be used to
+customize the elements used for sections and inline text decorations respectively.
+
+E.g.:
+
+```hbs
+{{render-mobiledoc mobiledoc=myMobileDoc sectionElementRenderer=mySectionElementRenderer}}
+```
+
+```js
+mySectionElementRenderer: {
+  h1: (tagName, domDocument) => {
+    let element = domDocument.createElement('h1');
+    element.classList.add('primary-heading');
+    return element;
+  }
+}
+```
+
 #### Use mobiledoc-dom-renderer directly
 
 This addon provides the mobiledoc-dom-renderer directly. Most of the time
