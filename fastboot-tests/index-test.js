@@ -1,4 +1,5 @@
 'use strict';
+/* eslint-disable ember/no-global-jquery, ember/no-jquery */
 
 const expect = require('chai').expect;
 const setupTest = require('ember-fastboot-addon-tests').setupTest;
@@ -24,7 +25,6 @@ describe('index', function() {
     return this.visit('/')
       .then(function(res) {
         let $ = res.jQuery;
-        let response = res.response;
 
         let wrapper = $(`.render-mobiledoc-wrapper.${name}`);
         expect(wrapper.length).to.equal(1);
@@ -39,7 +39,6 @@ describe('index', function() {
     return this.visit('/')
       .then(function(res) {
         let $ = res.jQuery;
-        let response = res.response;
 
         let wrapper = $(`.render-mobiledoc-wrapper.${name}`);
         expect(wrapper.length).to.equal(1);
@@ -55,7 +54,6 @@ describe('index', function() {
     return this.visit('/')
       .then(function(res) {
         let $ = res.jQuery;
-        let response = res.response;
 
         let wrapper = $(`.render-mobiledoc-wrapper.${name}`);
         expect(wrapper.length).to.equal(1);
@@ -72,7 +70,6 @@ describe('index', function() {
     return this.visit('/')
       .then(function(res) {
         let $ = res.jQuery;
-        let response = res.response;
 
         let wrapper = $(`.render-mobiledoc-wrapper.${name}`);
         expect(wrapper.length).to.equal(1);

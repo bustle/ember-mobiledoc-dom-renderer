@@ -12,6 +12,12 @@ To learn more about mobiledoc see [mobiledoc-kit](https://github.com/bustlelabs/
 
 * `ember install ember-mobiledoc-dom-renderer`
 
+## Requirements
+
+* Ember.js v3.12 or above
+* Ember CLI v2.13 or above
+* Node.js v10 or above
+
 ### Usage
 
 #### Render basic mobiledoc in your template
