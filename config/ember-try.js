@@ -77,10 +77,6 @@ module.exports = async function() {
         }
       },
       {
-        name: 'fastboot-addon-tests',
-        command: 'ember fastboot:test'
-      },
-      {
         name: 'ember-classic',
         env: {
           EMBER_OPTIONAL_FEATURES: JSON.stringify({
