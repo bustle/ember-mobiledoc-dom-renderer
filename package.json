@@ -7,13 +7,13 @@
     "mobiledoc",
     "mobiledoc-kit"
   ],
+  "repository": "https://github.com/bustlelabs/ember-mobiledoc-dom-renderer",
   "license": "MIT",
   "author": "Bustlelabs",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "https://github.com/bustlelabs/ember-mobiledoc-dom-renderer",
   "scripts": {
     "build": "ember build",
     "start": "ember server",
@@ -50,12 +50,32 @@
     "ember-load-initializers": "^1.0.0",
     "ember-resolver": "^4.4.0",
     "ember-source": "~2.14.1",
-    "loader.js": "^4.6.0"
+    "loader.js": "^4.6.0",
+    "release-it": "^13.6.0",
+    "release-it-lerna-changelog": "^2.3.0"
   },
   "engines": {
     "node": ">= 0.12.0"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "ember-addon": {
     "configPath": "tests/dummy/config"
+  },
+  "release-it": {
+    "plugins": {
+      "release-it-lerna-changelog": {
+        "infile": "CHANGELOG.md",
+        "launchEditor": false
+      }
+    },
+    "git": {
+      "tagName": "v${version}"
+    },
+    "github": {
+      "release": true,
+      "tokenRef": "GITHUB_AUTH"
+    }
   }
 }
