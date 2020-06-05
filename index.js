@@ -1,4 +1,3 @@
-/* jshint node: true */
 'use strict';
 
 var path = require('path');
@@ -6,7 +5,7 @@ var Funnel = require('broccoli-funnel');
 var merge = require('broccoli-merge-trees');
 
 module.exports = {
-  name: 'ember-mobiledoc-dom-renderer',
+  name: require('./package').name,
 
   treeForAddon: function(tree) {
     var libRoot = require.resolve('mobiledoc-dom-renderer/lib');

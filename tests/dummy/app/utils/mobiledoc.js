@@ -1,4 +1,4 @@
-const MOBILEDOC_VERSION = '0.3.1';
+const MOBILEDOC_VERSION = '0.3.2';
 
 export function createSimpleMobiledoc(text) {
   return {
@@ -75,5 +75,3 @@ export function createMobiledocWithCard(cardName) {
     ]
   };
 }
-
-

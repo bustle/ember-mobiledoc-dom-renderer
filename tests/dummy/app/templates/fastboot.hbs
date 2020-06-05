@@ -1,0 +1,13 @@
+<h1>ember-fastboot-addon-tests</h1>
+
+<div id="mobiledocs">
+  {{#each this.mobiledocs as |mobiledocInfo|}}
+    <div class="render-mobiledoc-wrapper {{mobiledocInfo.name}}">
+      <RenderMobiledoc
+        @mobiledoc={{mobiledocInfo.mobiledoc}}
+        @cardNames={{mobiledocInfo.cardNames}}
+        @atomNames={{mobiledocInfo.atomNames}}
+      />
+    </div>
+  {{/each}}
+</div>

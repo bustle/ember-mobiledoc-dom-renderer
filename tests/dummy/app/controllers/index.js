@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
 let mobiledocs = {
   simple: {
@@ -36,19 +38,17 @@ let mobiledocs = {
   }
 };
 
-export default Ember.Controller.extend({
-  init() {
-    this._super(...arguments);
-    this.set('mobiledoc', mobiledocs['simple']);
-    this.set('mobiledocNames', Object.keys(mobiledocs));
-  },
-
-  cardNames: ['sample-card'],
-  atomNames: ['sample-test-atom'],
-
-  actions: {
-    selectMobiledoc({target: {value}}) {
-      this.set('mobiledoc', mobiledocs[value]);
-    }
+export default class extends Controller {
+  @tracked mobiledoc = mobiledocs['simple'];
+  get mobiledocNames() {
+    return Object.keys(mobiledocs);
   }
-});
+
+  cardNames = ['sample-card'];
+  atomNames = ['sample-test-atom'];
+
+  @action
+  selectMobiledoc({target: {value}}) {
+    this.mobiledoc = mobiledocs[value];
+  }
+}

@@ -1,3 +1,8 @@
+import { A } from '@ember/array';
+import Component from '@ember/component';
+import { assert } from '@ember/debug';
+import { computed } from '@ember/object';
+import { join } from '@ember/runloop';
 import Ember from 'ember';
 import Renderer from 'ember-mobiledoc-dom-renderer';
 import { RENDER_TYPE } from 'ember-mobiledoc-dom-renderer';
@@ -6,9 +11,6 @@ import { getDocument } from '../utils/document';
 import assign from '../utils/polyfilled-assign';
 
 const {
-  assert,
-  computed,
-  run: { join },
   uuid
 } = Ember;
 
@@ -69,11 +71,11 @@ function createComponentAtom(name) {
   };
 }
 
-export default Ember.Component.extend({
+export default Component.extend({
   layout: layout,
 
   didReceiveAttrs() {
-    let mobiledoc = this.get('mobiledoc');
+    let mobiledoc = this.mobiledoc;
     assert(`Must pass mobiledoc to render-mobiledoc component`, !!mobiledoc);
 
     if (this._teardownRender) {
@@ -85,29 +87,29 @@ export default Ember.Component.extend({
 
   // pass in an array of card names that the mobiledoc may have. These
   // map to component names using `cardNameToComponentName`
-  cardNames: [],
+  cardNames: [], // eslint-disable-line
 
   // pass in an array of atom names that the mobiledoc may have. These
   // map to component names using `atomNameToComponentName`
-  atomNames: [],
+  atomNames: [], // eslint-disable-line
 
   _mdcCards: computed('cardNames', function() {
-    return this.get('cardNames').map(name => createComponentCard(name));
+    return this.cardNames.map(name => createComponentCard(name));
   }),
 
   _mdcAtoms: computed('atomNames', function() {
-    return this.get('atomNames').map(name => createComponentAtom(name));
+    return this.atomNames.map(name => createComponentAtom(name));
   }),
 
   _renderMobiledoc() {
     let dom = getDocument(this);
 
-    let mobiledoc = this.get('mobiledoc');
+    let mobiledoc = this.mobiledoc;
 
     let options = {
       dom,
-      cards: this.get('_mdcCards'),
-      atoms: this.get('_mdcAtoms')
+      cards: this._mdcCards,
+      atoms: this._mdcAtoms
     };
     [
       'mobiledoc', 'sectionElementRenderer', 'markupElementRenderer',
@@ -119,8 +121,8 @@ export default Ember.Component.extend({
       }
     });
 
-    let passedOptions = this.get('cardOptions');
-    let cardOptions = this.get('_cardOptions');
+    let passedOptions = this.cardOptions;
+    let cardOptions = this._cardOptions;
     options.cardOptions = passedOptions ? assign(passedOptions, cardOptions) : cardOptions;
 
     let renderer = new Renderer(options);
@@ -195,30 +197,30 @@ export default Ember.Component.extend({
   // @private
 
   _componentCards: computed(function() {
-    return Ember.A();
+    return A();
   }),
 
   _componentAtoms: computed(function() {
-    return Ember.A();
+    return A();
   }),
 
   addCard(card) {
-    this.get('_componentCards').pushObject(card);
+    this._componentCards.pushObject(card);
   },
 
   removeCard(card) {
     join(() => {
-      this.get('_componentCards').removeObject(card);
+      this._componentCards.removeObject(card);
     });
   },
 
   addAtom(atom) {
-    this.get('_componentAtoms').pushObject(atom);
+    this._componentAtoms.pushObject(atom);
   },
 
   removeAtom(atom) {
     join(() => {
-      this.get('_componentAtoms').removeObject(atom);
+      this._componentAtoms.removeObject(atom);
     });
   },
 
