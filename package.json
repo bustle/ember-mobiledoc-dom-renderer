@@ -19,6 +19,7 @@
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*",
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
+    "release": "release-it",
     "start": "ember serve",
     "test": "npm-run-all lint:* test:*",
     "test:ember": "ember test",
@@ -88,7 +89,7 @@
     "plugins": {
       "release-it-lerna-changelog": {
         "infile": "CHANGELOG.md",
-        "launchEditor": false
+        "launchEditor": true
       }
     },
     "git": {
