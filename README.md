@@ -1,5 +1,5 @@
 # ember-mobiledoc-dom-renderer
-[![Build Status](https://travis-ci.org/bustlelabs/ember-mobiledoc-dom-renderer.svg?branch=master)](https://travis-ci.org/bustlelabs/ember-mobiledoc-dom-renderer)
+[![Build Status](https://travis-ci.org/bustle/ember-mobiledoc-dom-renderer.svg?branch=master)](https://travis-ci.org/bustle/ember-mobiledoc-dom-renderer)
 
 Provides:
 
@@ -14,8 +14,8 @@ To learn more about mobiledoc see [mobiledoc-kit](https://github.com/bustlelabs/
 
 ## Requirements
 
-* Ember.js v3.12 or above
-* Ember CLI v2.13 or above
+* Ember.js v3.8 or above (tested in LTS versions starting 3.8 -- likely works on earlier releases)
+* Ember CLI v3.8 or above
 * Node.js v10 or above
 
 ### Usage
@@ -100,8 +100,4 @@ to use the renderer directly in code, it can be imported:
 
 #### Release process
 
-To release a new version:
-
-  * Use `np` (`npm install -g np`)
-  * `np <version>` (e.g. `np 1.0.0`)
-  * `git push <origin> --tags`
+See RELEASE.md
