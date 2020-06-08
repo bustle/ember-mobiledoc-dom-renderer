@@ -1,12 +1,14 @@
-{{this.renderedMobiledoc}}
+<div ...attributes>
+  {{this.renderedMobiledoc}}
+</div>
 
 {{#each this._componentCards as |card|}}
-  {{#ember-wormhole to=card.destinationElementId}}
+  {{#in-element card.destinationElement}}
     {{component card.componentName options=(readonly card.options) payload=(readonly card.payload)}}
-  {{/ember-wormhole}}
+  {{/in-element}}
 {{/each}}
 {{#each this._componentAtoms as |atom|}}
-  {{#ember-wormhole to=atom.destinationElementId}}
+  {{#in-element atom.destinationElement}}
     {{component atom.componentName options=(readonly atom.options) payload=(readonly atom.payload) value=(readonly atom.value)}}
-  {{/ember-wormhole}}
+  {{/in-element}}
 {{/each}}

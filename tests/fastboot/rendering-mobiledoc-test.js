@@ -15,7 +15,6 @@ module('FastBoot | rendering tests', function(hooks) {
   test('renders simple mobiledoc', async function(assert) {
     let name = 'simple';
     let { htmlDocument } = await visit('/fastboot');
-
     let wrapper = `.render-mobiledoc-wrapper.${name}`;
     assert.dom(wrapper, htmlDocument).exists({ count: 1});
 
