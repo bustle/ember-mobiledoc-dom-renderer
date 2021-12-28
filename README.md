@@ -14,9 +14,9 @@ To learn more about mobiledoc see [mobiledoc-kit](https://github.com/bustlelabs/
 
 ## Requirements
 
-* Ember.js v3.8 or above (tested in LTS versions starting 3.8 -- likely works on earlier releases)
-* Ember CLI v3.8 or above
-* Node.js v10 or above
+* Ember.js v3.16 or above (for older versions of Ember, try 0.7.0)
+* Ember CLI v3.16 or above
+* Node.js v12 or above
 
 ### Usage
 

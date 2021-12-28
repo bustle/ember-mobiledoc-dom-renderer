@@ -1,14 +1,11 @@
 import { A } from '@ember/array';
-import Component from '@ember/component';
-import { assert } from '@ember/debug';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import { join } from '@ember/runloop';
 import Ember from 'ember';
 import Renderer from 'ember-mobiledoc-dom-renderer';
 import { RENDER_TYPE } from 'ember-mobiledoc-dom-renderer';
-import layout from '../templates/components/render-mobiledoc';
-import { getDocument } from '../utils/document';
-import assign from '../utils/polyfilled-assign';
+import { getDocument } from 'ember-mobiledoc-dom-renderer/utils/document';
+import assign from 'ember-mobiledoc-dom-renderer/utils/polyfilled-assign';
 
 const {
   uuid
@@ -71,61 +68,38 @@ function createComponentAtom(name) {
   };
 }
 
-export default Component.extend({
-  layout: layout,
+export default class extends Component {
+  _teardownRender;
 
-  didReceiveAttrs() {
-    let mobiledoc = this.mobiledoc;
-    assert(`Must pass mobiledoc to render-mobiledoc component`, !!mobiledoc);
+  // pass in an array of card names that the mobiledoc may have. These
+  // map to component names using `cardNameToComponentName`
+  get cardNames() {
+    return this.args.cardNames || [];
+  }
 
+  // pass in an array of atom names that the mobiledoc may have. These
+  // map to component names using `atomNameToComponentName`
+  get atomNames() {
+    return this.args.atomNames || [];
+  }
+
+  get mdcCards() {
+    return this.cardNames.map(createComponentCard);
+  }
+
+  get mdcAtoms() {
+    return this.atomNames.map(createComponentAtom);
+  }
+
+  get renderedMobiledoc() {
     if (this._teardownRender) {
       this._teardownRender();
       this._teardownRender = null;
     }
-    this._renderMobiledoc();
-  },
 
-  // pass in an array of card names that the mobiledoc may have. These
-  // map to component names using `cardNameToComponentName`
-  cardNames: [], // eslint-disable-line
-
-  // pass in an array of atom names that the mobiledoc may have. These
-  // map to component names using `atomNameToComponentName`
-  atomNames: [], // eslint-disable-line
-
-  _mdcCards: computed('cardNames', function() {
-    return this.cardNames.map(name => createComponentCard(name));
-  }),
-
-  _mdcAtoms: computed('atomNames', function() {
-    return this.atomNames.map(name => createComponentAtom(name));
-  }),
-
-  _renderMobiledoc() {
     let dom = getDocument(this);
-
-    let mobiledoc = this.mobiledoc;
-
-    let options = {
-      dom,
-      cards: this._mdcCards,
-      atoms: this._mdcAtoms
-    };
-    [
-      'mobiledoc', 'sectionElementRenderer', 'markupElementRenderer',
-       'unknownCardHandler', 'unknownAtomHandler'
-    ].forEach(option => {
-      let value = this.get(option);
-      if (value) {
-        options[option] = value;
-      }
-    });
-
-    let passedOptions = this.cardOptions;
-    let cardOptions = this._cardOptions;
-    options.cardOptions = passedOptions ? assign(passedOptions, cardOptions) : cardOptions;
-
-    let renderer = new Renderer(options);
+    let { mobiledoc } = this.args;
+    let renderer = new Renderer(this._buildRendererOptions(dom));
     let { result, teardown } = renderer.render(mobiledoc);
 
     // result is a document fragment, and glimmer2 errors when cleaning it up.
@@ -135,11 +109,34 @@ export default Component.extend({
     let wrapper = this._createElement(dom, 'div');
     wrapper.appendChild(result);
 
-    this.set('renderedMobiledoc', wrapper);
     this._teardownRender = teardown;
-  },
+    return wrapper;
+  }
 
-  _cardOptions: computed(function() {
+  _buildRendererOptions(dom) {
+    let options = {
+      dom,
+      cards: this.mdcCards,
+      atoms: this.mdcAtoms,
+    };
+    [
+      'mobiledoc', 'sectionElementRenderer', 'markupElementRenderer',
+       'unknownCardHandler', 'unknownAtomHandler'
+    ].forEach(option => {
+      let value = this.args[option];
+      if (value) {
+        options[option] = value;
+      }
+    });
+
+    let passedOptions = this.args.cardOptions;
+    let cardOptions = this._cardOptions;
+    cardOptions = passedOptions ? assign(passedOptions, cardOptions) : cardOptions;
+    options.cardOptions = cardOptions;
+    return options;
+  }
+
+  get _cardOptions() {
     return {
       [ADD_CARD_HOOK]: ({env, options, payload}) => {
         let { name: cardName, dom } = env;
@@ -149,7 +146,7 @@ export default Component.extend({
 
         let card = {
           componentName,
-          destinationElementId: element.getAttribute('id'),
+          destinationElement: element,
           payload,
           options
         };
@@ -164,7 +161,7 @@ export default Component.extend({
 
         let atom = {
           componentName,
-          destinationElementId: element.getAttribute('id'),
+          destinationElement: element,
           payload,
           value,
           options
@@ -175,58 +172,53 @@ export default Component.extend({
       [REMOVE_CARD_HOOK]: (card) => this.removeCard(card),
       [REMOVE_ATOM_HOOK]: (atom) => this.removeAtom(atom)
     };
-  }),
+  }
 
-  willDestroyElement() {
+  willDestroy() {
     if (this._teardownRender) {
       this._teardownRender();
     }
-    return this._super(...arguments);
-  },
+    return super.willDestroy(...arguments);
+  }
 
   // override in subclass to change the mapping of card name -> component name
   cardNameToComponentName(name) {
     return name;
-  },
+  }
 
   // override in subclass to change the mapping of atom name -> component name
   atomNameToComponentName(name) {
     return name;
-  },
+  }
 
   // @private
 
-  _componentCards: computed(function() {
-    return A();
-  }),
-
-  _componentAtoms: computed(function() {
-    return A();
-  }),
+  _componentCards =  A();
+  _componentAtoms = A();
 
   addCard(card) {
     this._componentCards.pushObject(card);
-  },
+  }
 
   removeCard(card) {
     join(() => {
       this._componentCards.removeObject(card);
     });
-  },
+  }
 
   addAtom(atom) {
     this._componentAtoms.pushObject(atom);
-  },
+  }
 
   removeAtom(atom) {
     join(() => {
       this._componentAtoms.removeObject(atom);
     });
-  },
+  }
 
   generateUuid() {
     return `${UUID_PREFIX}${uuid()}`;
-  },
+  }
 
   _createElement(dom, tagName, classNames=[]) {
     let el = dom.createElement(tagName);
@@ -234,4 +226,4 @@ export default Component.extend({
     el.setAttribute('class', classNames.join(' '));
     return el;
   }
-});
+}
