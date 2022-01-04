@@ -1,18 +1,19 @@
-## v0.8.0-beta.0 (2021-12-28)
+## v0.8.0 (2022-01-04)
 
-#### :boom: Breaking Change
-* [#59](https://github.com/bustle/ember-mobiledoc-dom-renderer/pull/59) [BREAKING] Update to use glimmer component ([@lukemelia](https://github.com/lukemelia))
+Promoted 0.8.0 beta to stable
 
-#### :house: Internal
-* [#75](https://github.com/bustle/ember-mobiledoc-dom-renderer/pull/75) Use Github Actions for CI ([@lukemelia](https://github.com/lukemelia))
 
-#### Committers: 1
-- Luke Melia ([@lukemelia](https://github.com/lukemelia))
+<a name="0.8.0"></a>
+# 0.8.0 (2022-01-04)
+
+
+
 
 <a name="0.8.0-beta.0"></a>
 # 0.8.0-beta.0 (2021-12-28)
 
 * [BREAKING] Drop compatibility with Ember < 3.16 ([f47d771](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/f47d771))
+* Release 0.8.0-beta.0 ([81caf32](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/81caf32))
 * Update to modern Ember ([e8c1673](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/e8c1673))
 * Use Github Actions for CI ([3eb3865](https://github.com/bustlelabs/ember-mobiledoc-dom-renderer/commit/3eb3865))
 
