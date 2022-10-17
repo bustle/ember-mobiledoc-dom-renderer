@@ -7,22 +7,19 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
     ecmaFeatures: {
-      legacyDecorators: true
-    }
+      legacyDecorators: true,
+    },
   },
-  plugins: [
-    "ember"
-  ],
+  plugins: ['ember'],
   extends: [
-    "eslint:recommended",
-    "plugin:ember/recommended"
+    'eslint:recommended',
+    'plugin:ember/recommended',
+    'plugin:prettier/recommended',
   ],
   env: {
-    browser: true
+    browser: true,
   },
-  rules: {
-    'ember/no-jquery': 'error'
-  },
+  rules: {},
   overrides: [
     // node files
     {
@@ -44,21 +41,19 @@ module.exports = {
         "tests/dummy/app/**"
       ],
       parserOptions: {
-        sourceType: "script"
+        sourceType: 'script',
       },
       env: {
         browser: false,
         node: true,
-        mocha: true
       },
-      plugins: ["node"],
-      rules: Object.assign(
-        {},
-        require("eslint-plugin-node").configs.recommended.rules,
-        {
-          // add your custom rules and overrides for node files here
-        }
-      )
-    }
-  ]
+      plugins: ['node'],
+      extends: ['plugin:node/recommended'],
+    },
+    {
+      // Test files:
+      files: ['tests/**/*-test.{js,ts}'],
+      extends: ['plugin:qunit/recommended'],
+    },
+  ],
 };
