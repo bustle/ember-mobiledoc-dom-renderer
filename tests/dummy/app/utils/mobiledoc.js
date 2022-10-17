@@ -6,43 +6,27 @@ export function createSimpleMobiledoc(text) {
     markups: [],
     atoms: [],
     cards: [],
-    sections: [
-      [1, 'P', [
-        [0, [], 0, text]
-      ]]
-    ]
+    sections: [[1, 'P', [[0, [], 0, text]]]],
   };
 }
 
 export function createMobiledocWithStrongMarkup(text) {
   return {
     version: MOBILEDOC_VERSION,
-    markups: [
-      ['STRONG']
-    ],
+    markups: [['STRONG']],
     atoms: [],
     cards: [],
-    sections: [
-      [1, 'P', [
-        [0, [0], 1, text]
-      ]]
-    ]
+    sections: [[1, 'P', [[0, [0], 1, text]]]],
   };
 }
 
 export function createMobiledocWithMarkup(text, markup) {
   return {
     version: MOBILEDOC_VERSION,
-    markups: [
-      markup
-    ],
+    markups: [markup],
     atoms: [],
     cards: [],
-    sections: [
-      [1, 'P', [
-        [0, [0], 1, text]
-      ]]
-    ]
+    sections: [[1, 'P', [[0, [0], 1, text]]]],
   };
 }
 
@@ -50,15 +34,9 @@ export function createMobiledocWithAtom(atomName) {
   return {
     version: MOBILEDOC_VERSION,
     markups: [],
-    atoms: [
-      [atomName, 'value', {foo: 'bar'}]
-    ],
+    atoms: [[atomName, 'value', { foo: 'bar' }]],
     cards: [],
-    sections: [
-      [1, 'P', [
-        [1, [], 0, 0]
-      ]]
-    ]
+    sections: [[1, 'P', [[1, [], 0, 0]]]],
   };
 }
 
@@ -67,11 +45,7 @@ export function createMobiledocWithCard(cardName) {
     version: MOBILEDOC_VERSION,
     markups: [],
     atoms: [],
-    cards: [
-      [cardName, {foo: 'bar'}]
-    ],
-    sections: [
-      [10, 0]
-    ]
+    cards: [[cardName, { foo: 'bar' }]],
+    sections: [[10, 0]],
   };
 }

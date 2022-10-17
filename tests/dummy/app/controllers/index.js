@@ -8,34 +8,32 @@ let mobiledocs = {
     markups: [],
     cards: [],
     atoms: [],
-    sections: [
-      [1, 'P', [
-        [0, [], 0, 'Hello world!']
-      ]]
-    ]
+    sections: [[1, 'P', [[0, [], 0, 'Hello world!']]]],
   },
   card: {
     version: '0.3.0',
     markups: [],
     cards: [['sample-card', {}]],
     atoms: [],
-    sections: [
-      [10, 0]
-    ]
+    sections: [[10, 0]],
   },
   atom: {
     version: '0.3.0',
     markups: [],
     cards: [],
-    atoms: [['sample-test-atom', 'bob', {foo: 'bar'}]],
+    atoms: [['sample-test-atom', 'bob', { foo: 'bar' }]],
     sections: [
-      [1, 'P', [
-        [0, [], 0, 'Hello card'],
-        [1, 0, [], 0],
-        [0, [], 0, '!']
-      ]]
-    ]
-  }
+      [
+        1,
+        'P',
+        [
+          [0, [], 0, 'Hello card'],
+          [1, 0, [], 0],
+          [0, [], 0, '!'],
+        ],
+      ],
+    ],
+  },
 };
 
 export default class extends Controller {
@@ -48,7 +46,7 @@ export default class extends Controller {
   atomNames = ['sample-test-atom'];
 
   @action
-  selectMobiledoc({target: {value}}) {
+  selectMobiledoc({ target: { value } }) {
     this.mobiledoc = mobiledocs[value];
   }
 }

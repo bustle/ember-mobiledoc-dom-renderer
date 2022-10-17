@@ -4,9 +4,7 @@ module.exports = {
   extends: 'recommended',
   rules: {
     'no-curly-component-invocation': {
-      allow: [
-        'ember-wormhole'
-      ]
-    }
-  }
+      allow: ['ember-wormhole'],
+    },
+  },
 };

@@ -7,15 +7,15 @@ var merge = require('broccoli-merge-trees');
 module.exports = {
   name: require('./package').name,
 
-  treeForAddon: function(tree) {
+  treeForAddon: function (tree) {
     var libRoot = require.resolve('mobiledoc-dom-renderer/lib');
     var libPath = path.dirname(libRoot);
 
     var rendererTree = new Funnel(libPath, {
       include: ['**/*.js'],
-      destDir: '/mobiledoc-dom-renderer'
+      destDir: '/mobiledoc-dom-renderer',
     });
     var mergedTree = merge([tree, rendererTree]);
     return this._super.treeForAddon.call(this, mergedTree);
-  }
+  },
 };

@@ -4,7 +4,7 @@ import {
   createSimpleMobiledoc,
   createMobiledocWithMarkup,
   createMobiledocWithCard,
-  createMobiledocWithAtom
+  createMobiledocWithAtom,
 } from '../utils/mobiledoc';
 
 export default class extends Controller {
@@ -13,37 +13,43 @@ export default class extends Controller {
       name: 'simple',
       mobiledoc: createSimpleMobiledoc('hello world'),
       cardNames: [],
-      atomNames: []
+      atomNames: [],
     },
     {
       name: 'with-markup',
       mobiledoc: createMobiledocWithMarkup('markup text', ['em']),
       cardNames: [],
-      atomNames: []
+      atomNames: [],
     },
     {
       name: 'with-link',
-      mobiledoc: createMobiledocWithMarkup('linked', ['a', ['href', 'http://example.com/with-link']]),
+      mobiledoc: createMobiledocWithMarkup('linked', [
+        'a',
+        ['href', 'http://example.com/with-link'],
+      ]),
       cardNames: [],
-      atomNames: []
+      atomNames: [],
     },
     {
       name: 'with-unsafe-link',
-      mobiledoc: createMobiledocWithMarkup('linked unsafe', ['a', ['href', 'javascript:evil']]),
+      mobiledoc: createMobiledocWithMarkup('linked unsafe', [
+        'a',
+        ['href', 'javascript:evil'],
+      ]),
       cardNames: [],
-      atomNames: []
+      atomNames: [],
     },
     {
       name: 'card',
       mobiledoc: createMobiledocWithCard('test-card'),
       cardNames: ['test-card'],
-      atomNames: []
+      atomNames: [],
     },
     {
       name: 'atom',
       mobiledoc: createMobiledocWithAtom('test-atom'),
       cardNames: [],
-      atomNames: ['test-atom']
-    }
+      atomNames: ['test-atom'],
+    },
   ];
 }
