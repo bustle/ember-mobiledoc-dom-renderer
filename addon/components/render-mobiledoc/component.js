@@ -192,13 +192,19 @@ export default class extends Component {
     return super.willDestroy(...arguments);
   }
 
-  // override in subclass to change the mapping of card name -> component name
+  // pass the argument to change the mapping of card name -> component name
   cardNameToComponentName(name) {
+    if (this.args.cardNameToComponentName) {
+      return this.args.cardNameToComponentName(name);
+    }
     return name;
   }
 
-  // override in subclass to change the mapping of atom name -> component name
+  // pass the argument to change the mapping of atom name -> component name
   atomNameToComponentName(name) {
+    if (this.args.atomNameToComponentName) {
+      return this.args.atomNameToComponentName(name);
+    }
     return name;
   }
 

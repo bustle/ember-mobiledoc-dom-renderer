@@ -45,13 +45,31 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
       .exists(`renders card with class ${CARD_ELEMENT_CLASS}-${cardName}`);
   });
 
-  test('it uses `cardNameToComponentName` to allow selecting components', async function (assert) {
+  test('it uses `cardNameToComponentName` to allow selecting components (inheritance)', async function (assert) {
     this.set('mobiledoc', createMobiledocWithCard(cardName));
     this.set('cardNames', [cardName]);
 
     // NameChangingRenderer replaced "sample" in card names with "sample-name-changed"
     await render(
       hbs`<NameChangingRenderer @mobiledoc={{this.mobiledoc}} @cardNames={{this.cardNames}} />`
+    );
+    assert.dom('#sample-test-card').doesNotExist();
+    assert
+      .dom('#sample-changed-name-test-card')
+      .exists('renders card template');
+    assert
+      .dom('#sample-changed-name-test-card')
+      .hasText('foo: bar', 'renders card payload');
+  });
+
+  test('it uses `cardNameToComponentName` to allow selecting components (arg)', async function (assert) {
+    this.set('mobiledoc', createMobiledocWithCard(cardName));
+    this.set('cardNames', [cardName]);
+    this.set('cardNameToComponentName', (cardName) => {
+      return cardName.replace('sample', 'sample-changed-name');
+    });
+    await render(
+      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @cardNames={{this.cardNames}} @cardNameToComponentName={{this.cardNameToComponentName}} />`
     );
     assert.dom('#sample-test-card').doesNotExist();
     assert
@@ -84,7 +102,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
       .exists(`renders atom with class ${ATOM_ELEMENT_CLASS}-${atomName}`);
   });
 
-  test('it uses `atomNameToComponentName` to allow selecting components', async function (assert) {
+  test('it uses `atomNameToComponentName` to allow selecting components (inheritance)', async function (assert) {
     this.set('mobiledoc', createMobiledocWithAtom(atomName));
     this.set('atomNames', [atomName]);
 
@@ -93,6 +111,27 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
       hbs`<NameChangingRenderer @mobiledoc={{this.mobiledoc}} @atomNames={{this.atomNames}} />`
     );
 
+    assert.dom('#sample-test-atom').doesNotExist();
+    assert
+      .dom('#sample-changed-name-test-atom')
+      .exists('renders atom template');
+    assert
+      .dom('#sample-changed-name-test-atom')
+      .includesText('value: value', 'renders atom value');
+    assert
+      .dom('#sample-changed-name-test-atom')
+      .includesText('payload: bar', 'renders atom payload');
+  });
+
+  test('it uses `atomNameToComponentName` to allow selecting components (arg)', async function (assert) {
+    this.set('mobiledoc', createMobiledocWithAtom(atomName));
+    this.set('atomNames', [atomName]);
+    this.set('atomNameToComponentName', (atomName) => {
+      return atomName.replace('sample', 'sample-changed-name');
+    });
+    await render(
+      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @atomNames={{this.atomNames}} @atomNameToComponentName={{this.atomNameToComponentName}} />`
+    );
     assert.dom('#sample-test-atom').doesNotExist();
     assert
       .dom('#sample-changed-name-test-atom')
