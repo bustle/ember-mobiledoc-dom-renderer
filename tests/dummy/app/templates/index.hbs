@@ -1,8 +1,10 @@
-<select onchange={{this.selectMobiledoc}}>
-  {{#each this.mobiledocNames as |name|}}
-    <option value={{name}}>{{name}}</option>
-  {{/each}}
-</select>
+<label>Doc:
+  <select onchange={{this.selectMobiledoc}}>
+    {{#each this.mobiledocNames as |name|}}
+      <option value={{name}}>{{name}}</option>
+    {{/each}}
+  </select>
+</label>
 
 <h2>rendered:</h2>
 <RenderMobiledoc

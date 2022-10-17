@@ -1,12 +1,10 @@
 'use strict';
 
 module.exports = {
-  extends: 'octane',
+  extends: 'recommended',
   rules: {
     'no-curly-component-invocation': {
-      allow: [
-        'ember-wormhole'
-      ]
-    }
-  }
+      allow: ['ember-wormhole'],
+    },
+  },
 };

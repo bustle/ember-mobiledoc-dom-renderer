@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = function(environment) {
-  var ENV = {
+module.exports = function (environment) {
+  let ENV = {
     modulePrefix: 'dummy',
     environment: environment,
     rootURL: '/',
@@ -12,15 +12,15 @@ module.exports = function(environment) {
         // e.g. EMBER_NATIVE_DECORATOR_SUPPORT: true
       },
       EXTEND_PROTOTYPES: {
-        // prevent Ember Data from overriding Date.parse.
-        Date: false
-      }
+        // Prevent Ember Data from overriding Date.parse.
+        Date: false,
+      },
     },
 
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
+    },
   };
 
   if (environment === 'development') {
