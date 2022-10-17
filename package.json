@@ -25,7 +25,7 @@
     "test:ember": "ember test",
     "test:ember-compatibility": "ember try:each",
     "update-changelog": "conventional-changelog -i CHANGELOG.md -r 0 -s",
-    "version": "npm run update-changelog && git add CHANGELOG.md"
+    "version": "yarn run update-changelog && git add CHANGELOG.md"
   },
   "dependencies": {
     "broccoli-funnel": "^3.0.3",
