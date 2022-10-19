@@ -3,7 +3,7 @@
 
 Provides:
 
-  * Component `{{render-mobiledoc}}` for rendering mobiledoc in your ember app
+  * Component `<RenderMobiledoc ... />` for rendering mobiledoc in your ember app
   * (For advanced use) The ability to import the [`mobiledoc-dom-renderer`](https://github.com/bustlelabs/mobiledoc-dom-renderer) class
   
 To learn more about mobiledoc see [mobiledoc-kit](https://github.com/bustlelabs/mobiledoc-kit).
@@ -23,7 +23,7 @@ To learn more about mobiledoc see [mobiledoc-kit](https://github.com/bustlelabs/
 #### Render basic mobiledoc in your template
 
 ```hbs
-{{render-mobiledoc mobiledoc=myMobileDoc}}
+<RenderMmobiledoc @mobiledoc={{myMobileDoc}} />
 ```
 
 #### Render mobiledoc with cards, using ember components to render cards
@@ -31,7 +31,7 @@ To learn more about mobiledoc see [mobiledoc-kit](https://github.com/bustlelabs/
 ```hbs
 {{! myMobiledoc is the mobiledoc you want to render }}
 {{! myCardNames is an array of card names, e.g. ['embed-card', 'slideshow-card'] }}
-{{render-mobiledoc mobiledoc=myMobileDoc cardNames=myCardNames}}
+<RenderMmobiledoc @mobiledoc={{myMobileDoc}} @cardNames={{myCardNames}} />
 ```
 
 The ember components with names matching the mobiledoc card names will be rendered
@@ -40,19 +40,30 @@ The ember components will be in a wrapper div with the class '__rendered-mobiled
 
 #### Customizing card lookup
 
-If your mobiledoc card names do not match component names, you can subclass
-the `render-mobiledoc` component and override its `cardNameToComponentName` method.
+If your mobiledoc card names do not match component names, you can pass an argument to
+the `<RenderMobiledoc...>` component to provide your own mapping.
 
 E.g.:
 
+```hbs
+// components/my-component.hbs
+<RenderMobiledoc
+  @mobiledoc={{...}}
+  @cardNameToComponentName={{this.cardNameToComponentName}}
+/>
+```
+
 ```javascript
-// components/my-render-mobiledoc.js
-import RenderMobiledoc from 'ember-mobiledoc-dom-renderer/components/render-mobiledoc';
-export default RenderMobiledoc.extend({
+// components/my-component.js
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+
+export default class extends Component {
+  @action
   cardNameToComponentName(mobiledocCardName) {
     return 'cards/' + mobiledocCardName;
   }
-});
+}
 ```
 
 #### Render mobiledoc with atoms, using ember components to render atoms
@@ -61,13 +72,13 @@ This works the same way as rendering mobiledoc with ember components for cards.
 To pass atom names to the renderer, use the `atomNames` property, e.g.:
 ```hbs
 {{! myAtomNames is an array of atom names, e.g. ['mention-atom'] }}
-{{render-mobiledoc mobiledoc=myMobileDoc atomNames=myAtomNames}}
+<RenderMobiledoc @mobiledoc={{myMobileDoc}} @atomNames={{myAtomNames}} />
 ```
 
 The component will be passed a `payload` and `value` property.
 
-To customize atom lookup, extend the `render-mobiledoc` component and override
-its `atomNameToComponentName` method.
+To customize atom lookup, pass an `atomNameToComponentName` argument similar to
+what is shown above for `cardNameToComponentName`.
 
 #### Customizing markup and section rendering
 The `sectionElementRenderer` and `markupElementRenderer` options can be used to
@@ -76,7 +87,7 @@ customize the elements used for sections and inline text decorations respectivel
 E.g.:
 
 ```hbs
-{{render-mobiledoc mobiledoc=myMobileDoc sectionElementRenderer=mySectionElementRenderer}}
+<RenderMobiledoc @mobiledoc={{this.myMobileDoc}} @sectionElementRenderer={{this.mySectionElementRenderer}} />
 ```
 
 ```js
@@ -92,7 +103,7 @@ mySectionElementRenderer: {
 #### Use mobiledoc-dom-renderer directly
 
 This addon provides the mobiledoc-dom-renderer directly. Most of the time
-you will want to use the `{{render-mobiledoc}}` component, but if you need
+you will want to use the `<RenderMobiledoc />` component, but if you need
 to use the renderer directly in code, it can be imported:
 
 `import DOMRenderer from 'ember-mobiledoc-dom-renderer'`;
