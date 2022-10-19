@@ -1,3 +1,14 @@
+## v0.8.1 (2022-10-19)
+
+#### :rocket: Enhancement
+* [#88](https://github.com/bustle/ember-mobiledoc-dom-renderer/pull/88) Provide alternative to inheritance for customizing component paths ([@lukemelia](https://github.com/lukemelia))
+
+#### :house: Internal
+* [#89](https://github.com/bustle/ember-mobiledoc-dom-renderer/pull/89) Remove package-lock.json. ([@lukemelia](https://github.com/lukemelia))
+
+#### Committers: 1
+- Luke Melia ([@lukemelia](https://github.com/lukemelia))
+
 ## v0.8.0 (2022-01-04)
 
 Promoted 0.8.0 beta to stable
