@@ -32,7 +32,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     this.set('mobiledoc', createMobiledocWithCard(cardName));
     this.set('cardNames', [cardName]);
     await render(
-      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @cardNames={{this.cardNames}} />`
+      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @cardNames={{this.cardNames}} />`,
     );
 
     assert.dom('#sample-test-card').exists('renders card template');
@@ -51,7 +51,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
 
     // NameChangingRenderer replaced "sample" in card names with "sample-name-changed"
     await render(
-      hbs`<NameChangingRenderer @mobiledoc={{this.mobiledoc}} @cardNames={{this.cardNames}} />`
+      hbs`<NameChangingRenderer @mobiledoc={{this.mobiledoc}} @cardNames={{this.cardNames}} />`,
     );
     assert.dom('#sample-test-card').doesNotExist();
     assert
@@ -69,7 +69,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
       return cardName.replace('sample', 'sample-changed-name');
     });
     await render(
-      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @cardNames={{this.cardNames}} @cardNameToComponentName={{this.cardNameToComponentName}} />`
+      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @cardNames={{this.cardNames}} @cardNameToComponentName={{this.cardNameToComponentName}} />`,
     );
     assert.dom('#sample-test-card').doesNotExist();
     assert
@@ -84,7 +84,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     this.set('mobiledoc', createMobiledocWithAtom(atomName));
     this.set('atomNames', [atomName]);
     await render(
-      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @atomNames={{this.atomNames}} />`
+      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @atomNames={{this.atomNames}} />`,
     );
 
     assert.dom('#sample-test-atom').exists('renders atom template');
@@ -108,7 +108,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
 
     // NameChangingRenderer replaced "sample" in atom names with "sample-name-changed"
     await render(
-      hbs`<NameChangingRenderer @mobiledoc={{this.mobiledoc}} @atomNames={{this.atomNames}} />`
+      hbs`<NameChangingRenderer @mobiledoc={{this.mobiledoc}} @atomNames={{this.atomNames}} />`,
     );
 
     assert.dom('#sample-test-atom').doesNotExist();
@@ -130,7 +130,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
       return atomName.replace('sample', 'sample-changed-name');
     });
     await render(
-      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @atomNames={{this.atomNames}} @atomNameToComponentName={{this.atomNameToComponentName}} />`
+      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @atomNames={{this.atomNames}} @atomNameToComponentName={{this.atomNameToComponentName}} />`,
     );
     assert.dom('#sample-test-atom').doesNotExist();
     assert
@@ -160,21 +160,21 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     this.set('mobiledoc', createMobiledocWithAtom('test-atom'));
     this.set('atomNames', ['test-atom']);
     await render(
-      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @atomNames={{this.atomNames}} />`
+      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @atomNames={{this.atomNames}} />`,
     );
 
-    assert.equal(inserted, 1, 'inserts component once');
+    assert.strictEqual(inserted, 1, 'inserts component once');
     run(() => (atom.payload = {}));
-    assert.equal(
+    assert.strictEqual(
       inserted,
       1,
-      'after modifying payload, does not insert component atom again'
+      'after modifying payload, does not insert component atom again',
     );
     run(() => (atom.value = {}));
-    assert.equal(
+    assert.strictEqual(
       inserted,
       1,
-      'after modifying value, does not insert component atom again'
+      'after modifying value, does not insert component atom again',
     );
   });
 
@@ -227,7 +227,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     assert.deepEqual(
       didDestroy,
       ['destroy-notifying-renderer', 'test-atom'],
-      'destroyed all'
+      'destroyed all',
     );
     assert.deepEqual(didInsert, [], 'nothing inserted');
   });
@@ -263,7 +263,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     this.owner.register('component:other-atom', OtherAtomComponent);
 
     await render(
-      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @atomNames={{this.atomNames}} />`
+      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @atomNames={{this.atomNames}} />`,
     );
 
     assert.deepEqual(didDestroy, [], 'nothing destroyed');
@@ -290,7 +290,6 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     let card;
     class CardComponent extends Component {
       @tracked payload;
-      @tracked payload;
       constructor() {
         super(...arguments);
         card = this;
@@ -301,15 +300,15 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     this.set('mobiledoc', createMobiledocWithCard('test-card'));
     this.set('cardNames', ['test-card']);
     await render(
-      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @cardNames={{this.cardNames}} />`
+      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @cardNames={{this.cardNames}} />`,
     );
 
-    assert.equal(inserted, 1, 'inserts component once');
+    assert.strictEqual(inserted, 1, 'inserts component once');
     run(() => (card.payload = {}));
-    assert.equal(
+    assert.strictEqual(
       inserted,
       1,
-      'after modifying payload, does not insert component card again'
+      'after modifying payload, does not insert component card again',
     );
   });
 
@@ -361,7 +360,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     assert.deepEqual(
       didDestroy,
       ['destroy-notifying-renderer', 'test-card'],
-      'destroyed all'
+      'destroyed all',
     );
     assert.deepEqual(didInsert, [], 'nothing inserted');
   });
@@ -399,7 +398,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     this.owner.register('component:other-card', OtherComponent);
 
     await render(
-      hbs`<DestroyNotifyingRenderer @mobiledoc={{this.mobiledoc}} @cardNames={{this.cardNames}} @onWillDestroy={{this.onWillDestroyRenderer}} />`
+      hbs`<DestroyNotifyingRenderer @mobiledoc={{this.mobiledoc}} @cardNames={{this.cardNames}} @onWillDestroy={{this.onWillDestroyRenderer}} />`,
     );
 
     assert.deepEqual(didDestroy, [], 'nothing destroyed');
@@ -422,10 +421,10 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     this.set('mobiledoc', createMobiledocWithCard('unknown'));
 
     await render(
-      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @unknownCardHandler={{this.unknownCardHandler}} />`
+      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @unknownCardHandler={{this.unknownCardHandler}} />`,
     );
 
-    assert.equal(called, 1, 'unknownCardHandler called');
+    assert.strictEqual(called, 1, 'unknownCardHandler called');
   });
 
   test('Can pass unknownAtomHandler', async function (assert) {
@@ -436,10 +435,10 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     this.set('mobiledoc', createMobiledocWithAtom('unknown'));
 
     await render(
-      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @unknownAtomHandler={{this.unknownAtomHandler}} />`
+      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @unknownAtomHandler={{this.unknownAtomHandler}} />`,
     );
 
-    assert.equal(called, 1, 'unknownAtomHandler called');
+    assert.strictEqual(called, 1, 'unknownAtomHandler called');
   });
 
   test('Can pass sectionElementRenderer', async function (assert) {
@@ -451,7 +450,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     this.set('mobiledoc', createSimpleMobiledoc('Hi'));
 
     await render(
-      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @sectionElementRenderer={{this.sectionElementRenderer}} />`
+      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @sectionElementRenderer={{this.sectionElementRenderer}} />`,
     );
 
     assert.dom('h1').hasText('Hi', 'renders mobiledoc');
@@ -466,14 +465,13 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     this.set('mobiledoc', createMobiledocWithStrongMarkup('Hi'));
 
     await render(
-      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @markupElementRenderer={{this.markupElementRenderer}} />`
+      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @markupElementRenderer={{this.markupElementRenderer}} />`,
     );
 
     assert.dom('span').hasText('Hi', 'renders mobiledoc');
   });
 
   test('Can pass cardOptions and they appear for cards', async function (assert) {
-    assert.expect(1);
     let passedOption = {};
     let cardName = 'my-card';
     this.set('mobiledoc', createMobiledocWithCard(cardName));
@@ -482,18 +480,17 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     class CardComponent extends Component {
       constructor() {
         super(...arguments);
-        assert.equal(this.args.options.passedOption, passedOption);
+        assert.strictEqual(this.args.options.passedOption, passedOption);
       }
     }
     this.owner.register('component:my-card', CardComponent);
 
     await render(
-      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @cardNames={{this.cardNames}} @cardOptions={{this.cardOptions}} />`
+      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @cardNames={{this.cardNames}} @cardOptions={{this.cardOptions}} />`,
     );
   });
 
   test('Can pass cardOptions and they appear for atoms', async function (assert) {
-    assert.expect(1);
     let passedOption = {};
     let atomName = 'my-atom';
     this.set('mobiledoc', createMobiledocWithAtom(atomName));
@@ -502,13 +499,13 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     class AtomComponent extends Component {
       constructor() {
         super(...arguments);
-        assert.equal(this.args.options.passedOption, passedOption);
+        assert.strictEqual(this.args.options.passedOption, passedOption);
       }
     }
     this.owner.register('component:my-atom', AtomComponent);
 
     await render(
-      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @atomNames={{this.atomNames}} @cardOptions={{this.cardOptions}} />`
+      hbs`<RenderMobiledoc @mobiledoc={{this.mobiledoc}} @atomNames={{this.atomNames}} @cardOptions={{this.cardOptions}} />`,
     );
   });
 });

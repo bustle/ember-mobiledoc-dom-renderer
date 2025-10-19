@@ -9,7 +9,7 @@ module('FastBoot | rendering tests', function (hooks) {
 
   test('renders', async function (assert) {
     let res = await visit('/fastboot');
-    assert.equal(res.statusCode, 200);
+    assert.strictEqual(res.statusCode, 200);
 
     assert.dom('body', res.htmlDocument).exists({ count: 1 });
     assert.dom('h1', res.htmlDocument).hasText('ember-fastboot-addon-tests');
@@ -74,7 +74,7 @@ module('FastBoot | rendering tests', function (hooks) {
     let payloadClassName = 'test-card-component-payload';
 
     let { htmlDocument, statusCode } = await visit('/fastboot');
-    assert.equal(statusCode, 200);
+    assert.strictEqual(statusCode, 200);
 
     let wrapper = `.render-mobiledoc-wrapper.${name}`;
     assert.dom(wrapper, htmlDocument).exists({ count: 1 });
@@ -93,7 +93,7 @@ module('FastBoot | rendering tests', function (hooks) {
     let valueClassName = 'test-atom-component-value';
 
     let { htmlDocument, statusCode } = await visit('/fastboot');
-    assert.equal(statusCode, 200);
+    assert.strictEqual(statusCode, 200);
 
     let wrapper = `.render-mobiledoc-wrapper.${name}`;
     assert.dom(wrapper, htmlDocument).exists({ count: 1 });

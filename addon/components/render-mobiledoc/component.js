@@ -1,13 +1,10 @@
 import { A } from '@ember/array';
 import Component from '@glimmer/component';
 import { join } from '@ember/runloop';
-import Ember from 'ember';
 import Renderer from 'ember-mobiledoc-dom-renderer';
 import { RENDER_TYPE } from 'ember-mobiledoc-dom-renderer';
 import { getDocument } from 'ember-mobiledoc-dom-renderer/utils/document';
-import assign from 'ember-mobiledoc-dom-renderer/utils/polyfilled-assign';
-
-const { uuid } = Ember;
+import { guidFor } from '@ember/object/internals';
 
 const ADD_CARD_HOOK = 'addComponentCard';
 const REMOVE_CARD_HOOK = 'removeComponentCard';
@@ -18,6 +15,8 @@ const ATOM_TAG_NAME = 'span';
 const UUID_PREFIX = '__rendered-mobiledoc-entity-';
 export const CARD_ELEMENT_CLASS = '__rendered-mobiledoc-card';
 export const ATOM_ELEMENT_CLASS = '__rendered-mobiledoc-atom';
+
+let counter = 0;
 
 const CARD_HOOKS = {
   ADD: ADD_CARD_HOOK,
@@ -135,7 +134,7 @@ export default class extends Component {
     let passedOptions = this.args.cardOptions;
     let cardOptions = this._cardOptions;
     cardOptions = passedOptions
-      ? assign(passedOptions, cardOptions)
+      ? Object.assign(passedOptions, cardOptions)
       : cardOptions;
     options.cardOptions = cardOptions;
     return options;
@@ -234,7 +233,7 @@ export default class extends Component {
   }
 
   generateUuid() {
-    return `${UUID_PREFIX}${uuid()}`;
+    return `${UUID_PREFIX}${guidFor(this)}-${counter++}`;
   }
 
   _createElement(dom, tagName, classNames = []) {
