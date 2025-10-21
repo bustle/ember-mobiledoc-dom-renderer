@@ -1,14 +1,11 @@
 import { module, test } from 'qunit';
-import {
-  setup,
-  visit /* mockServer */,
-} from 'ember-cli-fastboot-testing/test-support';
+import { setup, visit } from 'ember-cli-fastboot-testing/test-support';
 
 module('FastBoot | rendering tests', function (hooks) {
   setup(hooks);
 
   test('renders', async function (assert) {
-    let res = await visit('/fastboot');
+    const res = await visit('/fastboot');
     assert.strictEqual(res.statusCode, 200);
 
     assert.dom('body', res.htmlDocument).exists({ count: 1 });
@@ -16,9 +13,9 @@ module('FastBoot | rendering tests', function (hooks) {
   });
 
   test('renders simple mobiledoc', async function (assert) {
-    let name = 'simple';
-    let { htmlDocument } = await visit('/fastboot');
-    let wrapper = `.render-mobiledoc-wrapper.${name}`;
+    const name = 'simple';
+    const { htmlDocument } = await visit('/fastboot');
+    const wrapper = `.render-mobiledoc-wrapper.${name}`;
     assert.dom(wrapper, htmlDocument).exists({ count: 1 });
 
     assert
@@ -27,25 +24,25 @@ module('FastBoot | rendering tests', function (hooks) {
   });
 
   test('renders mobiledoc with markup', async function (assert) {
-    let name = 'with-markup';
-    let { htmlDocument } = await visit('/fastboot');
+    const name = 'with-markup';
+    const { htmlDocument } = await visit('/fastboot');
 
-    let wrapper = `.render-mobiledoc-wrapper.${name}`;
+    const wrapper = `.render-mobiledoc-wrapper.${name}`;
     assert.dom(wrapper, htmlDocument).exists({ count: 1 });
 
-    let markup = `.render-mobiledoc-wrapper.${name} em`;
+    const markup = `.render-mobiledoc-wrapper.${name} em`;
     assert.dom(markup, htmlDocument).exists({ count: 1 });
     assert.dom(markup, htmlDocument).hasText('markup text');
   });
 
   test('renders mobiledoc with link', async function (assert) {
-    let name = 'with-link';
-    let { htmlDocument } = await visit('/fastboot');
+    const name = 'with-link';
+    const { htmlDocument } = await visit('/fastboot');
 
-    let wrapper = `.render-mobiledoc-wrapper.${name}`;
+    const wrapper = `.render-mobiledoc-wrapper.${name}`;
     assert.dom(wrapper, htmlDocument).exists({ count: 1 });
 
-    let link = `.render-mobiledoc-wrapper.${name} a`;
+    const link = `.render-mobiledoc-wrapper.${name} a`;
     assert.dom(link, htmlDocument).exists({ count: 1 });
     assert
       .dom(link, htmlDocument)
@@ -54,13 +51,13 @@ module('FastBoot | rendering tests', function (hooks) {
   });
 
   test('renders mobiledoc with unsafe link', async function (assert) {
-    let name = 'with-unsafe-link';
-    let { htmlDocument } = await visit('/fastboot');
+    const name = 'with-unsafe-link';
+    const { htmlDocument } = await visit('/fastboot');
 
-    let wrapper = `.render-mobiledoc-wrapper.${name}`;
+    const wrapper = `.render-mobiledoc-wrapper.${name}`;
     assert.dom(wrapper, htmlDocument).exists({ count: 1 });
 
-    let link = `.render-mobiledoc-wrapper.${name} a`;
+    const link = `.render-mobiledoc-wrapper.${name} a`;
     assert.dom(link, htmlDocument).exists({ count: 1 });
     assert
       .dom(link, htmlDocument)
@@ -69,42 +66,42 @@ module('FastBoot | rendering tests', function (hooks) {
   });
 
   test('renders mobiledoc with card', async function (assert) {
-    let name = 'card';
-    let componentClassName = 'test-card-component';
-    let payloadClassName = 'test-card-component-payload';
+    const name = 'card';
+    const componentClassName = 'test-card-component';
+    const payloadClassName = 'test-card-component-payload';
 
-    let { htmlDocument, statusCode } = await visit('/fastboot');
+    const { htmlDocument, statusCode } = await visit('/fastboot');
     assert.strictEqual(statusCode, 200);
 
-    let wrapper = `.render-mobiledoc-wrapper.${name}`;
+    const wrapper = `.render-mobiledoc-wrapper.${name}`;
     assert.dom(wrapper, htmlDocument).exists({ count: 1 });
 
-    let component = `.render-mobiledoc-wrapper.${name} .${componentClassName}`;
+    const component = `.render-mobiledoc-wrapper.${name} .${componentClassName}`;
     assert.dom(component, htmlDocument).exists({ count: 1 });
 
-    let payload = `.render-mobiledoc-wrapper.${name} .${payloadClassName}`;
+    const payload = `.render-mobiledoc-wrapper.${name} .${payloadClassName}`;
     assert.dom(payload, htmlDocument).hasText('bar');
   });
 
   test('renders mobiledoc with atom', async function (assert) {
-    let name = 'atom';
-    let componentClassName = 'test-atom-component';
-    let payloadClassName = 'test-atom-component-payload';
-    let valueClassName = 'test-atom-component-value';
+    const name = 'atom';
+    const componentClassName = 'test-atom-component';
+    const payloadClassName = 'test-atom-component-payload';
+    const valueClassName = 'test-atom-component-value';
 
-    let { htmlDocument, statusCode } = await visit('/fastboot');
+    const { htmlDocument, statusCode } = await visit('/fastboot');
     assert.strictEqual(statusCode, 200);
 
-    let wrapper = `.render-mobiledoc-wrapper.${name}`;
+    const wrapper = `.render-mobiledoc-wrapper.${name}`;
     assert.dom(wrapper, htmlDocument).exists({ count: 1 });
 
-    let component = `.render-mobiledoc-wrapper.${name} .${componentClassName}`;
+    const component = `.render-mobiledoc-wrapper.${name} .${componentClassName}`;
     assert.dom(component, htmlDocument).exists({ count: 1 });
 
-    let payloadSelector = `.render-mobiledoc-wrapper.${name} .${payloadClassName}`;
+    const payloadSelector = `.render-mobiledoc-wrapper.${name} .${payloadClassName}`;
     assert.dom(payloadSelector, htmlDocument).hasText('bar');
 
-    let valueSelector = `.render-mobiledoc-wrapper.${name} .${valueClassName}`;
+    const valueSelector = `.render-mobiledoc-wrapper.${name} .${valueClassName}`;
     assert.dom(valueSelector, htmlDocument).hasText('value');
   });
 });

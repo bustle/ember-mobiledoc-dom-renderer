@@ -1,0 +1,9 @@
+{
+  "extends": "ember-cli-typescript/tsconfig.json",
+  "glint": {
+    "environment": ["ember-loose", "ember-template-imports"]
+  },
+  "compilerOptions": {
+    "skipLibCheck": true
+  }
+}

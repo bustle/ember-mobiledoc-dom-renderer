@@ -86,6 +86,40 @@ module.exports = [
         files: ['tests/**/*-test.{js,ts}'],
         extends: ['plugin:qunit/recommended'],
       },
+      {
+        files: ['**/*.gts'],
+        parser: 'ember-eslint-parser',
+        plugins: ['@typescript-eslint'],
+        rules: {
+          'no-unused-vars': 'off',
+          '@typescript-eslint/no-unused-vars': [
+            'error',
+            {
+              argsIgnorePattern: '^_',
+              varsIgnorePattern: '^_',
+              args: 'none',
+            },
+          ],
+          'ember/no-side-effects': 'off',
+        },
+      },
+      {
+        files: ['**/*.ts'],
+        parser: '@typescript-eslint/parser',
+        plugins: ['@typescript-eslint'],
+        extends: ['plugin:@typescript-eslint/recommended'],
+        rules: {
+          '@typescript-eslint/no-explicit-any': 'warn',
+          '@typescript-eslint/no-unused-vars': [
+            'error',
+            {
+              argsIgnorePattern: '^_',
+              varsIgnorePattern: '^_',
+              args: 'none',
+            },
+          ],
+        },
+      },
     ],
   }),
 ];

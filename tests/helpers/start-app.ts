@@ -1,5 +1,5 @@
 import { run } from '@ember/runloop';
-import Application from '../../app';
+import Application from 'dummy/app';
 import config from '../../config/environment';
 
 export default function startApp(attrs) {
