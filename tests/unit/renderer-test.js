@@ -18,7 +18,7 @@ module('Unit | Renderer', function () {
     assert.notStrictEqual(
       fixture.innerHTML.indexOf('<p>Hello, world!</p>'),
       -1,
-      'renders hello world'
+      'renders hello world',
     );
     assert.ok(!!rendered.teardown, 'has teardown');
 
@@ -27,7 +27,7 @@ module('Unit | Renderer', function () {
     assert.strictEqual(
       fixture.innerHTML.indexOf('<p>Hello, world!</p>'),
       -1,
-      'tears down rendered'
+      'tears down rendered',
     );
   });
 });

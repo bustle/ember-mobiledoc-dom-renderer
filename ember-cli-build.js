@@ -1,10 +1,14 @@
 'use strict';
 
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+const { maybeEmbroider } = require('@embroider/test-setup');
 
 module.exports = function (defaults) {
   let app = new EmberAddon(defaults, {
-    // Add options here
+    'ember-cli-babel': {
+      enableTypeScriptTransform: true,
+      extensions: ['js', 'ts', 'gjs', 'gts'],
+    },
   });
 
   /*
@@ -14,12 +18,13 @@ module.exports = function (defaults) {
     behave. You most likely want to be modifying `./index.js` or app's build file
   */
 
-  const { maybeEmbroider } = require('@embroider/test-setup');
-  return maybeEmbroider(app, {
-    skipBabel: [
-      {
-        package: 'qunit',
-      },
-    ],
-  });
+  return maybeEmbroider
+    ? maybeEmbroider(app, {
+        skipBabel: [
+          {
+            package: 'qunit',
+          },
+        ],
+      })
+    : app.toTree();
 };

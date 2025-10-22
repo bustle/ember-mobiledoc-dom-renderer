@@ -14,16 +14,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Install Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14.x
-      - name: Install Dependencies
-        run: npm install --frozen-lockfile
-      - name: Lint
-        run: npm run lint
-      - name: Run Tests
-        run: npm run test:ember
+      - uses: volta-cli/action@v4
+      - run: volta install node pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run lint
+      - run: pnpm run test:ember
 
   floating:
     name: "Floating Dependencies"
@@ -31,40 +26,29 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14.x
-      - name: Install Dependencies
-        run: npm install --no-lockfile
-      - name: Run Tests
-        run: npm run test:ember
+      - uses: volta-cli/action@v4
+      - run: volta install node pnpm
+      - run: pnpm install --no-lockfile
+      - run: pnpm run test:ember
 
   try-scenarios:
     name: ${{ matrix.try-scenario }}
     runs-on: ubuntu-latest
-    needs: 'test'
+    needs: "test"
 
     strategy:
       fail-fast: false
       matrix:
         try-scenario:
-          - ember-lts-3.16
-          - ember-lts-3.20
-          - ember-lts-3.24
-          - ember-lts-3.28
+          - ember-lts-4.12
+          - ember-lts-5.12
           - ember-release
           - ember-beta
           - ember-canary
-          - ember-classic
-          - ember-default-with-jquery
 
     steps:
       - uses: actions/checkout@v2
-      - name: Install Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14.x
-      - name: Install Dependencies
-        run: npm install --frozen-lockfile
-      - name: Run Tests
-        run: ./node_modules/.bin/ember try:one ${{ matrix.try-scenario }}
+      - uses: volta-cli/action@v4
+      - run: volta install node pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: ./node_modules/.bin/ember try:one ${{ matrix.try-scenario }}
