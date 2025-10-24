@@ -5,7 +5,7 @@ import Renderer from 'ember-mobiledoc-dom-renderer';
 import { getDocument } from 'ember-mobiledoc-dom-renderer/utils/document';
 import { guidFor } from '@ember/object/internals';
 import { ensureSafeComponent } from '@embroider/util';
-import { getOwner } from '@ember/owner';
+import { getOwner } from '@ember/application';
 
 const ADD_CARD_HOOK = 'addComponentCard';
 const REMOVE_CARD_HOOK = 'removeComponentCard';
