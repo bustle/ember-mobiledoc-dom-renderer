@@ -1,3 +1,8 @@
+## v1.0.0 (2025-10-24)
+
+[BREAKING] Modernize dependencies and tooling, adopt typescript, gts
+
+
 ## v1.0.0-2 (2025-10-24)
 
 ## v1.0.0-1 (2025-10-24)
