@@ -3,7 +3,8 @@ import { setupRenderingTest } from 'ember-qunit';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { run } from '@ember/runloop';
-import { render, type TestContext } from '@ember/test-helpers';
+import { render, click, type TestContext } from '@ember/test-helpers';
+import { on } from '@ember/modifier';
 import RenderMobiledoc from 'ember-mobiledoc-dom-renderer/components/render-mobiledoc';
 import DestroyNotifyingRenderer from 'dummy/components/destroy-notifying-renderer';
 import NameChangingRenderer from 'dummy/components/name-changing-renderer';
@@ -16,6 +17,7 @@ import {
   createMobiledocWithStrongMarkup,
   createMobiledocWithCard,
   createMobiledocWithAtom,
+  createMobiledocWithLink,
 } from '../../helpers/mobiledoc';
 
 module('Integration | Component | render-mobiledoc', function (hooks) {
@@ -634,5 +636,32 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
         />
       </template>,
     );
+  });
+
+  test('it renders links and forwards splattributes click', async function (this: TestContext, assert) {
+    let clicked = false;
+    this.set('handleClick', (ev) => {
+      ev.preventDefault();
+      clicked = true;
+    });
+    this.set(
+      'mobiledoc',
+      createMobiledocWithLink('https://example.com', 'Example'),
+    );
+    const context = this;
+    await render(
+      <template>
+        <RenderMobiledoc
+          @mobiledoc={{context.mobiledoc}}
+          {{on 'click' context.handleClick}}
+        />
+      </template>,
+    );
+
+    assert.dom('a').exists('renders an anchor element');
+    assert.dom('a').hasAttribute('href', 'https://example.com');
+
+    await click('a');
+    assert.ok(clicked, 'click handler invoked via splattributes');
   });
 });
