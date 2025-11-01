@@ -55,6 +55,12 @@ type RenderMobiledocArgs = {
   onWillDestroy?: () => void;
 };
 
+type Signature = {
+  Args: RenderMobiledocArgs;
+  Element: HTMLElement;
+  Blocks: never;
+};
+
 type HookArgs = [
   {
     env: {
@@ -107,7 +113,7 @@ function createComponentAtom(name: string) {
   };
 }
 
-export default class RenderMobiledocComponent extends Component<RenderMobiledocArgs> {
+export default class RenderMobiledocComponent extends Component<Signature> {
   @tracked private componentCardsStore: CardRegistration[] = [];
   @tracked private componentAtomsStore: AtomRegistration[] = [];
   private teardownRender: (() => void) | null = null;
@@ -382,22 +388,21 @@ export default class RenderMobiledocComponent extends Component<RenderMobiledocA
 
     {{#each this.componentCards as |card|}}
       {{#in-element card.destinationElement}}
-        {{component
-          card.componentDefinition
-          options=(readonly card.options)
-          payload=(readonly card.payload)
-        }}
+        {{#let card.componentDefinition as |CardComponent|}}
+          <CardComponent @options={{card.options}} @payload={{card.payload}} />
+        {{/let}}
       {{/in-element}}
     {{/each}}
 
     {{#each this.componentAtoms as |atom|}}
       {{#in-element atom.destinationElement}}
-        {{component
-          atom.componentDefinition
-          options=(readonly atom.options)
-          payload=(readonly atom.payload)
-          value=(readonly atom.value)
-        }}
+        {{#let atom.componentDefinition as |AtomComponent|}}
+          <AtomComponent
+            @options={{atom.options}}
+            @payload={{atom.payload}}
+            @value={{atom.value}}
+          />
+        {{/let}}
       {{/in-element}}
     {{/each}}
   </template>

@@ -3,7 +3,19 @@
   "glint": {
     "environment": ["ember-loose", "ember-template-imports"]
   },
+  "include": [
+    "addon/**/*.ts",
+    "addon/**/*.js",
+    "app/**/*.ts",
+    "app/**/*.js",
+    "tests/**/*.ts",
+    "tests/**/*.js",
+    "types/**/*.d.ts"
+  ],
   "compilerOptions": {
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    // Prefer our local `types/` (which imports Ember's stable types) and
+    // avoid automatically pulling in DefinitelyTyped `@types/*` bundles.
+    "typeRoots": ["./types"]
   }
 }

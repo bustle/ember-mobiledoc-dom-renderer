@@ -20,13 +20,29 @@ import {
   createMobiledocWithLink,
 } from '../../helpers/mobiledoc';
 
+type MobiledocTestContext = TestContext & {
+  mobiledoc: unknown;
+  cardNames: string[];
+  atomNames: string[];
+  cardNameToComponentName: (cardName: string) => string;
+  atomNameToComponentName: (atomName: string) => string;
+  sectionElementRenderer: object;
+  markupElementRenderer: object;
+  cardOptions: object;
+  unknownCardHandler: () => void;
+  unknownAtomHandler: () => void;
+  showRendered: boolean;
+  onWillDestroyRenderer: () => void;
+  handleClick: (ev: Event) => void;
+};
+
 module('Integration | Component | render-mobiledoc', function (hooks) {
   setupRenderingTest(hooks);
 
   const cardName = 'sample-test-card';
   const atomName = 'sample-test-atom';
 
-  test('it renders mobiledoc', async function (this: TestContext, assert) {
+  test('it renders mobiledoc', async function (this: MobiledocTestContext, assert) {
     this.set('mobiledoc', createSimpleMobiledoc('Hello, world!'));
     const context = this;
     await render(
@@ -35,7 +51,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     assert.dom('p').hasText('Hello, world!', 'Renders mobiledoc');
   });
 
-  test('it renders mobiledoc with cards', async function (this: TestContext, assert) {
+  test('it renders mobiledoc with cards', async function (this: MobiledocTestContext, assert) {
     this.set('mobiledoc', createMobiledocWithCard(cardName));
     this.set('cardNames', [cardName]);
     const context = this;
@@ -58,7 +74,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
       .exists(`renders card with class ${CARD_ELEMENT_CLASS}-${cardName}`);
   });
 
-  test('it uses `cardNameToComponentName` to allow selecting components (inheritance)', async function (this: TestContext, assert) {
+  test('it uses `cardNameToComponentName` to allow selecting components (inheritance)', async function (this: MobiledocTestContext, assert) {
     this.set('mobiledoc', createMobiledocWithCard(cardName));
     this.set('cardNames', [cardName]);
 
@@ -81,7 +97,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
       .hasText('foo: bar', 'renders card payload');
   });
 
-  test('it uses `cardNameToComponentName` to allow selecting components (arg)', async function (this: TestContext, assert) {
+  test('it uses `cardNameToComponentName` to allow selecting components (arg)', async function (this: MobiledocTestContext, assert) {
     this.set('mobiledoc', createMobiledocWithCard(cardName));
     this.set('cardNames', [cardName]);
     this.set('cardNameToComponentName', (cardName) => {
@@ -106,7 +122,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
       .hasText('foo: bar', 'renders card payload');
   });
 
-  test('it renders mobiledoc with atoms', async function (this: TestContext, assert) {
+  test('it renders mobiledoc with atoms', async function (this: MobiledocTestContext, assert) {
     this.set('mobiledoc', createMobiledocWithAtom(atomName));
     this.set('atomNames', [atomName]);
     const context = this;
@@ -134,7 +150,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
       .exists(`renders atom with class ${ATOM_ELEMENT_CLASS}-${atomName}`);
   });
 
-  test('it uses `atomNameToComponentName` to allow selecting components (inheritance)', async function (this: TestContext, assert) {
+  test('it uses `atomNameToComponentName` to allow selecting components (inheritance)', async function (this: MobiledocTestContext, assert) {
     this.set('mobiledoc', createMobiledocWithAtom(atomName));
     this.set('atomNames', [atomName]);
 
@@ -161,7 +177,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
       .includesText('payload: bar', 'renders atom payload');
   });
 
-  test('it uses `atomNameToComponentName` to allow selecting components (arg)', async function (this: TestContext, assert) {
+  test('it uses `atomNameToComponentName` to allow selecting components (arg)', async function (this: MobiledocTestContext, assert) {
     this.set('mobiledoc', createMobiledocWithAtom(atomName));
     this.set('atomNames', [atomName]);
     this.set('atomNameToComponentName', (atomName) => {
@@ -195,8 +211,8 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     class AtomComponent extends Component {
       @tracked payload;
       @tracked value;
-      constructor() {
-        super(...arguments);
+      constructor(owner, args) {
+        super(owner, args);
         atom = this;
         inserted++;
       }
@@ -229,24 +245,24 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     );
   });
 
-  test('teardown destroys atom components', async function (this: TestContext, assert) {
+  test('teardown destroys atom components', async function (this: MobiledocTestContext, assert) {
     this.set('showRendered', true);
     this.set('mobiledoc', createMobiledocWithAtom('test-atom'));
     this.set('atomNames', ['test-atom']);
 
-    let didDestroy = [],
-      didInsert = [];
+    let didDestroy: string[] = [],
+      didInsert: string[] = [];
     this.set('onWillDestroyRenderer', () => {
       didDestroy.push('destroy-notifying-renderer');
     });
 
     class AtomComponent extends Component {
-      constructor() {
-        super(...arguments);
+      constructor(owner, args) {
+        super(owner, args);
         didInsert.push('test-atom');
       }
       willDestroy() {
-        super.willDestroy(...arguments);
+        super.willDestroy();
         didDestroy.push('test-atom');
       }
     }
@@ -292,30 +308,30 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     assert.deepEqual(didInsert, [], 'nothing inserted');
   });
 
-  test('changing mobiledoc calls teardown and destroys atom component', async function (this: TestContext, assert) {
+  test('changing mobiledoc calls teardown and destroys atom component', async function (this: MobiledocTestContext, assert) {
     this.set('mobiledoc', createMobiledocWithAtom('test-atom'));
     this.set('atomNames', ['test-atom', 'other-atom']);
 
-    let didDestroy = [],
-      didInsert = [];
+    let didDestroy: string[] = [],
+      didInsert: string[] = [];
 
     class TestAtomComponent extends Component {
-      constructor() {
-        super(...arguments);
+      constructor(owner, args) {
+        super(owner, args);
         didInsert.push('test-atom');
       }
       willDestroy() {
-        super.willDestroy(...arguments);
+        super.willDestroy();
         didDestroy.push('test-atom');
       }
     }
     class OtherAtomComponent extends Component {
-      constructor() {
-        super(...arguments);
+      constructor(owner, args) {
+        super(owner, args);
         didInsert.push('other-atom');
       }
       willDestroy() {
-        super.willDestroy(...arguments);
+        super.willDestroy();
         didDestroy.push('other-atom');
       }
     }
@@ -343,7 +359,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     assert.deepEqual(didDestroy, ['test-atom'], 'destroyed test-atom');
   });
 
-  test('it rerenders when its mobiledoc changes', async function (this: TestContext, assert) {
+  test('it rerenders when its mobiledoc changes', async function (this: MobiledocTestContext, assert) {
     this.set('mobiledoc', createSimpleMobiledoc('Hello, world!'));
     const context = this;
     await render(
@@ -359,8 +375,8 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     let card;
     class CardComponent extends Component {
       @tracked payload;
-      constructor() {
-        super(...arguments);
+      constructor(owner, args) {
+        super(owner, args);
         card = this;
         inserted++;
       }
@@ -387,24 +403,24 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     );
   });
 
-  test('teardown destroys card components', async function (this: TestContext, assert) {
+  test('teardown destroys card components', async function (this: MobiledocTestContext, assert) {
     this.set('showRendered', true);
     this.set('mobiledoc', createMobiledocWithCard('test-card'));
     this.set('cardNames', ['test-card']);
 
-    let didDestroy = [],
-      didInsert = [];
+    let didDestroy: string[] = [],
+      didInsert: string[] = [];
     this.set('onWillDestroyRenderer', () => {
       didDestroy.push('destroy-notifying-renderer');
     });
 
     class CardComponent extends Component {
-      constructor() {
-        super(...arguments);
+      constructor(owner, args) {
+        super(owner, args);
         didInsert.push('test-card');
       }
       willDestroy() {
-        super.willDestroy(...arguments);
+        super.willDestroy();
         didDestroy.push('test-card');
       }
     }
@@ -449,32 +465,32 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     assert.deepEqual(didInsert, [], 'nothing inserted');
   });
 
-  test('changing mobiledoc calls teardown and destroys card components', async function (this: TestContext, assert) {
+  test('changing mobiledoc calls teardown and destroys card components', async function (this: MobiledocTestContext, assert) {
     this.set('mobiledoc', createMobiledocWithCard('test-card'));
     this.set('cardNames', ['test-card', 'other-card']);
 
-    let didDestroy = [],
-      didInsert = [];
+    let didDestroy: string[] = [],
+      didInsert: string[] = [];
     this.set('onWillDestroyRenderer', () => {
       didDestroy.push('destroy-notifying-renderer');
     });
     class CardComponent extends Component {
-      constructor() {
-        super(...arguments);
+      constructor(owner, args) {
+        super(owner, args);
         didInsert.push('test-card');
       }
       willDestroy() {
-        super.willDestroy(...arguments);
+        super.willDestroy();
         didDestroy.push('test-card');
       }
     }
     class OtherComponent extends Component {
-      constructor() {
-        super(...arguments);
+      constructor(owner, args) {
+        super(owner, args);
         didInsert.push('other-card');
       }
       willDestroy() {
-        super.willDestroy(...arguments);
+        super.willDestroy();
         didDestroy.push('other-card');
       }
     }
@@ -504,7 +520,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     assert.deepEqual(didDestroy, ['test-card'], 'destroyed test-card');
   });
 
-  test('Can pass unknownCardHandler', async function (this: TestContext, assert) {
+  test('Can pass unknownCardHandler', async function (this: MobiledocTestContext, assert) {
     let called = 0;
     this.set('unknownCardHandler', () => {
       called++;
@@ -524,7 +540,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     assert.strictEqual(called, 1, 'unknownCardHandler called');
   });
 
-  test('Can pass unknownAtomHandler', async function (this: TestContext, assert) {
+  test('Can pass unknownAtomHandler', async function (this: MobiledocTestContext, assert) {
     let called = 0;
     this.set('unknownAtomHandler', () => {
       called++;
@@ -544,7 +560,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     assert.strictEqual(called, 1, 'unknownAtomHandler called');
   });
 
-  test('Can pass sectionElementRenderer', async function (this: TestContext, assert) {
+  test('Can pass sectionElementRenderer', async function (this: MobiledocTestContext, assert) {
     this.set('sectionElementRenderer', {
       p(_, doc) {
         return doc.createElement('h1');
@@ -565,7 +581,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     assert.dom('h1').hasText('Hi', 'renders mobiledoc');
   });
 
-  test('Can pass markupElementRenderer', async function (this: TestContext, assert) {
+  test('Can pass markupElementRenderer', async function (this: MobiledocTestContext, assert) {
     this.set('markupElementRenderer', {
       strong(_, doc) {
         return doc.createElement('span');
@@ -586,15 +602,15 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     assert.dom('span').hasText('Hi', 'renders mobiledoc');
   });
 
-  test('Can pass cardOptions and they appear for cards', async function (this: TestContext, assert) {
+  test('Can pass cardOptions and they appear for cards', async function (this: MobiledocTestContext, assert) {
     let passedOption = {};
     let cardName = 'my-card';
     this.set('mobiledoc', createMobiledocWithCard(cardName));
     this.set('cardNames', [cardName]);
     this.set('cardOptions', { passedOption });
     class CardComponent extends Component {
-      constructor() {
-        super(...arguments);
+      constructor(owner, args) {
+        super(owner, args);
         assert.strictEqual(this.args.options.passedOption, passedOption);
       }
     }
@@ -612,15 +628,15 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     );
   });
 
-  test('Can pass cardOptions and they appear for atoms', async function (this: TestContext, assert) {
+  test('Can pass cardOptions and they appear for atoms', async function (this: MobiledocTestContext, assert) {
     let passedOption = {};
     let atomName = 'my-atom';
     this.set('mobiledoc', createMobiledocWithAtom(atomName));
     this.set('atomNames', [atomName]);
     this.set('cardOptions', { passedOption });
     class AtomComponent extends Component {
-      constructor() {
-        super(...arguments);
+      constructor(owner, args) {
+        super(owner, args);
         assert.strictEqual(this.args.options.passedOption, passedOption);
       }
     }
@@ -638,7 +654,7 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
     );
   });
 
-  test('it renders links and forwards splattributes click', async function (this: TestContext, assert) {
+  test('it renders links and forwards splattributes click', async function (this: MobiledocTestContext, assert) {
     let clicked = false;
     this.set('handleClick', (ev) => {
       ev.preventDefault();
