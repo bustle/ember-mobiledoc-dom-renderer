@@ -22,7 +22,7 @@ To learn more about mobiledoc see [mobiledoc-kit](https://github.com/bustlelabs/
 #### Render basic mobiledoc in your template
 
 ```hbs
-<RenderMmobiledoc @mobiledoc={{myMobileDoc}} />
+<RenderMobiledoc @mobiledoc={{myMobileDoc}} />
 ```
 
 #### Render mobiledoc with cards, using ember components to render cards
@@ -30,7 +30,7 @@ To learn more about mobiledoc see [mobiledoc-kit](https://github.com/bustlelabs/
 ```hbs
 {{! myMobiledoc is the mobiledoc you want to render }}
 {{! myCardNames is an array of card names, e.g. ['embed-card', 'slideshow-card'] }}
-<RenderMmobiledoc @mobiledoc={{myMobileDoc}} @cardNames={{myCardNames}} />
+<RenderMobiledoc @mobiledoc={{myMobileDoc}} @cardNames={{myCardNames}} />
 ```
 
 The ember components with names matching the mobiledoc card names will be rendered
