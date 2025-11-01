@@ -39,3 +39,15 @@ export function createMobiledocWithCard(cardName) {
     sections: [[10, 0]],
   };
 }
+
+export function createMobiledocWithLink(url, text) {
+  const display = typeof text === 'undefined' ? url : text;
+  return {
+    version: MOBILEDOC_VERSION,
+    markups: [['A', ['href', url]]],
+    atoms: [],
+    cards: [],
+    // paragraph with a text marker that opens the link markup (markup index 0)
+    sections: [[1, 'P', [[0, [0], 1, display]]]],
+  };
+}
