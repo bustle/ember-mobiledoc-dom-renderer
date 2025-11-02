@@ -1,3 +1,13 @@
+## v1.0.1 (2025-11-02)
+
+#### :house: Internal
+* [#113](https://github.com/bustle/ember-mobiledoc-dom-renderer/pull/113) chore(types): adopt Ember 5.1 stable types, add local typings and CI lint ([@lukemelia](https://github.com/lukemelia))
+* [#112](https://github.com/bustle/ember-mobiledoc-dom-renderer/pull/112) Add test coverage for rendering links and doing event delegation ([@lukemelia](https://github.com/lukemelia))
+
+#### Committers: 1
+- Luke Melia ([@lukemelia](https://github.com/lukemelia))
+
+
 ## v1.0.0 (2025-10-24)
 
 [BREAKING] Modernize dependencies and tooling, adopt typescript, gts
