@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { scheduleOnce } from '@ember/runloop';
+import { schedule, scheduleOnce } from '@ember/runloop';
 import Renderer from 'ember-mobiledoc-dom-renderer';
 import { getDocument } from 'ember-mobiledoc-dom-renderer/utils/document';
 import { guidFor } from '@ember/object/internals';
@@ -324,7 +324,7 @@ export default class RenderMobiledocComponent extends Component<Signature> {
 
   private addCard(card: CardRegistration): void {
     // Defer mutation to after the current render to avoid updating a value during computation
-    scheduleOnce('afterRender', this, this._addCard, card);
+    schedule('afterRender', this, this._addCard, card);
   }
 
   private _addCard(card: CardRegistration): void {
@@ -333,7 +333,7 @@ export default class RenderMobiledocComponent extends Component<Signature> {
 
   private removeCard(card: CardRegistration): void {
     // Defer mutation to after the current render to avoid updating a value during computation
-    scheduleOnce('afterRender', this, this._removeCard, card);
+    schedule('afterRender', this, this._removeCard, card);
   }
 
   private _removeCard(card: CardRegistration): void {
@@ -344,7 +344,7 @@ export default class RenderMobiledocComponent extends Component<Signature> {
 
   private addAtom(atom: AtomRegistration): void {
     // Defer mutation to after the current render to avoid updating a value during computation
-    scheduleOnce('afterRender', this, this._addAtom, atom);
+    schedule('afterRender', this, this._addAtom, atom);
   }
 
   private _addAtom(atom: AtomRegistration): void {
@@ -353,7 +353,7 @@ export default class RenderMobiledocComponent extends Component<Signature> {
 
   private removeAtom(atom: AtomRegistration): void {
     // Defer mutation to after the current render to avoid updating a value during computation
-    scheduleOnce('afterRender', this, this._removeAtom, atom);
+    schedule('afterRender', this, this._removeAtom, atom);
   }
 
   private _removeAtom(atom: AtomRegistration): void {

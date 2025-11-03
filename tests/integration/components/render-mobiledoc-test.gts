@@ -74,6 +74,44 @@ module('Integration | Component | render-mobiledoc', function (hooks) {
       .exists(`renders card with class ${CARD_ELEMENT_CLASS}-${cardName}`);
   });
 
+  test('it renders multiple cards in a single mobiledoc', async function (this: MobiledocTestContext, assert) {
+    const secondCardName = 'test-card';
+    this.set('mobiledoc', {
+      version: '0.3.1',
+      markups: [],
+      atoms: [],
+      cards: [
+        [cardName, { foo: 'bar' }],
+        [secondCardName, { foo: 'baz' }],
+      ],
+      sections: [
+        [10, 0],
+        [10, 1],
+      ],
+    });
+    this.set('cardNames', [cardName, secondCardName]);
+    const context = this;
+
+    await render(
+      <template>
+        <RenderMobiledoc
+          @mobiledoc={{context.mobiledoc}}
+          @cardNames={{context.cardNames}}
+        />
+      </template>,
+    );
+
+    assert
+      .dom(`.${CARD_ELEMENT_CLASS}`)
+      .exists({ count: 2 }, 'renders a card element for each card section');
+    assert
+      .dom('#sample-test-card')
+      .hasText('foo: bar', 'renders the first card payload');
+    assert
+      .dom('.test-card-component-payload')
+      .hasText('baz', 'renders the second card payload');
+  });
+
   test('it uses `cardNameToComponentName` to allow selecting components (inheritance)', async function (this: MobiledocTestContext, assert) {
     this.set('mobiledoc', createMobiledocWithCard(cardName));
     this.set('cardNames', [cardName]);
