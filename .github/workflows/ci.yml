@@ -10,63 +10,42 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'pnpm'
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: '10'
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Run lint
-        run: pnpm run lint
-name: CI
-
-on:
-  push:
-    branches:
-      - main
-      - master
-  pull_request: {}
-
-jobs:
-  test:
-    name: "Tests"
-    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: volta-cli/action@v4
       - run: volta install node pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm run lint
+
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    needs: lint
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: volta-cli/action@v4
+      - run: volta install node pnpm
+      - run: pnpm install --frozen-lockfile
       - run: pnpm run test:ember
 
   floating:
-    name: "Floating Dependencies"
+    name: Floating Dependencies
     runs-on: ubuntu-latest
+    needs: lint
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: volta-cli/action@v4
       - run: volta install node pnpm
       - run: pnpm install --no-lockfile
       - run: pnpm run test:ember
 
   try-scenarios:
-    name: ${{ matrix.try-scenario }}
+    name: Ember Try - ${{ matrix.try-scenario }}
     runs-on: ubuntu-latest
-    needs: "test"
+    needs: test
 
     strategy:
       fail-fast: false
@@ -79,7 +58,7 @@ jobs:
           - ember-canary
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: volta-cli/action@v4
       - run: volta install node pnpm
       - run: pnpm install --frozen-lockfile
