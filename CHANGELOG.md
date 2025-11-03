@@ -1,3 +1,12 @@
+
+## v1.0.2 (2025-11-03)
+
+#### :bug: Bug Fix
+* [#114](https://github.com/bustle/ember-mobiledoc-dom-renderer/pull/114) [Bug] Render multiple cards successfully ([@lukemelia](https://github.com/lukemelia))
+
+#### Committers: 1
+- Luke Melia ([@lukemelia](https://github.com/lukemelia))
+
 ## v1.0.1 (2025-11-02)
 
 #### :house: Internal
